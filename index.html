@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dev Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0c0f;
+    --bg2: #111417;
+    --bg3: #181c21;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --accent: #00e5a0;
+    --accent2: #0af;
+    --text: #e8edf2;
+    --muted: #7a8694;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 60px;
+    background: rgba(10,12,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  .nav-logo span { color: var(--muted); }
+
+  .nav-links { display: flex; gap: 0; }
+
+  .nav-links button {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0 1.2rem;
+    height: 60px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .nav-links button:hover, .nav-links button.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .page { display: none; padding-top: 60px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ========= HOME PAGE ========= */
+  .hero {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 80%);
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .hero h1 .accent { color: var(--accent); }
+  .hero h1 .dim { color: var(--muted); }
+
+  .hero-sub {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .hero-sub .highlight { color: var(--accent2); }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    padding: 0.75rem 1.75rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--border2);
+    padding: 0.75rem 1.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    position: absolute;
+    right: 2.5rem;
+    bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .skills-strip {
+    padding: 1.5rem 2.5rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .skill-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    background: var(--bg3);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .skill-tag:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ========= PROJECTS PAGE ========= */
+  .projects-header {
+    padding: 4rem 2.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--bg);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .project-card:hover { background: var(--bg2); }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.3s ease;
+  }
+
+  .project-card:hover::before { height: 100%; }
+
+  .project-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+
+  .project-desc {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tech {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .tech-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid var(--border2);
+    color: var(--accent2);
+  }
+
+  .project-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .project-link::after { content: '→'; }
+
+  /* ========= ABOUT PAGE ========= */
+  .about-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 60px);
+  }
+
+  .about-left {
+    padding: 4rem 3rem 4rem 2.5rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .about-right {
+    padding: 4rem 2.5rem 4rem 3rem;
+  }
+
+  .about-bio {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 2;
+    margin-top: 1.5rem;
+  }
+
+  .about-bio strong { color: var(--text); font-weight: 600; }
+
+  .timeline { margin-top: 2rem; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tl-year {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    padding-top: 2px;
+  }
+
+  .tl-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .tl-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .skill-section { margin-top: 0; }
+  .skill-group { margin-bottom: 2rem; }
+
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .skill-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .skill-bar-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  .skill-bar-track {
+    flex: 1;
+    height: 2px;
+    background: var(--border2);
+    position: relative;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    position: relative;
+  }
+
+  .skill-bar-fill::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    transform: rotate(90deg);
+  }
+
+  .skill-pct {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    width: 30px;
+    text-align: right;
+  }
+
+  /* ========= CONTACT PAGE ========= */
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 60px);
+  }
+
+  .contact-left {
+    padding: 4rem 3rem 4rem 2.5rem;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .contact-info { margin-top: 2rem; }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .contact-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .contact-item-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .contact-item-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .contact-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3rem;
+  }
+
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .contact-right {
+    padding: 4rem 2.5rem 4rem 3rem;
+  }
+
+  .form-group { margin-bottom: 1.5rem; }
+
+  .form-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .form-input, .form-textarea, .form-select {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--accent);
+  }
+
+  .form-textarea { resize: vertical; min-height: 140px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--accent);
+    color: #000;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    margin-top: 0.5rem;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .form-submit:hover { opacity: 0.88; }
+
+  .form-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    text-align: center;
+    line-height: 1.7;
+  }
+
+  .success-msg {
+    display: none;
+    background: rgba(0, 229, 160, 0.08);
+    border: 1px solid var(--accent);
+    padding: 1rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: 1rem;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>~/</span>portfolio</div>
+  <div class="nav-links">
+    <button class="active" onclick="showPage('home', this)">home</button>
+    <button onclick="showPage('projects', this)">projects</button>
+    <button onclick="showPage('about', this)">about</button>
+    <button onclick="showPage('contact', this)">contact</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-tag">Available for hire</div>
+    <h1>
+      Building<br/>
+      <span class="accent">digital</span><br/>
+      <span class="dim">products.</span>
+    </h1>
+    <p class="hero-sub">
+      Full-stack developer crafting <span class="highlight">fast</span>, <span class="highlight">scalable</span>, and <span class="highlight">elegant</span> web applications. From API architecture to pixel-perfect UIs.
+    </p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="showPage('projects', document.querySelectorAll('.nav-links button')[1])">View Projects</button>
+      <button class="btn-secondary" onclick="showPage('contact', document.querySelectorAll('.nav-links button')[3])">Get In Touch</button>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Years exp.</div>
+      </div>
+      <div>
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Clients</div>
+      </div>
+    </div>
+  </div>
+  <div class="skills-strip">
+    <div class="skill-tag">React</div>
+    <div class="skill-tag">Node.js</div>
+    <div class="skill-tag">TypeScript</div>
+    <div class="skill-tag">PostgreSQL</div>
+    <div class="skill-tag">Docker</div>
+    <div class="skill-tag">AWS</div>
+    <div class="skill-tag">Python</div>
+    <div class="skill-tag">GraphQL</div>
+    <div class="skill-tag">Next.js</div>
+    <div class="skill-tag">Redis</div>
+    <div class="skill-tag">Figma</div>
+    <div class="skill-tag">CI/CD</div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="page" id="page-projects">
+  <div class="projects-header">
+    <div class="page-eyebrow">// selected work</div>
+    <h2 class="page-title">Projects</h2>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-num">01 — 2024</div>
+      <div class="project-title">E-Commerce Platform</div>
+      <p class="project-desc">A full-stack marketplace with real-time inventory, Stripe payments, and an admin dashboard. Handles 10k+ concurrent users with Redis caching.</p>
+      <div class="project-tech">
+        <span class="tech-badge">Next.js</span>
+        <span class="tech-badge">PostgreSQL</span>
+        <span class="tech-badge">Stripe</span>
+        <span class="tech-badge">Redis</span>
+      </div>
+      <div class="project-link">View Case Study</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02 — 2024</div>
+      <div class="project-title">Real-Time Analytics Dashboard</div>
+      <p class="project-desc">Business intelligence tool with live data pipelines, custom chart components, and role-based access control. Deployed on AWS ECS.</p>
+      <div class="project-tech">
+        <span class="tech-badge">React</span>
+        <span class="tech-badge">Node.js</span>
+        <span class="tech-badge">WebSockets</span>
+        <span class="tech-badge">AWS</span>
+      </div>
+      <div class="project-link">View Case Study</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03 — 2023</div>
+      <div class="project-title">Developer API & SDK</div>
+      <p class="project-desc">RESTful + GraphQL API serving 500+ third-party integrations. Includes auto-generated docs, rate limiting, and OAuth 2.0 authentication.</p>
+      <div class="project-tech">
+        <span class="tech-badge">GraphQL</span>
+        <span class="tech-badge">TypeScript</span>
+        <span class="tech-badge">OAuth 2.0</span>
+        <span class="tech-badge">Docker</span>
+      </div>
+      <div class="project-link">View Case Study</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">04 — 2023</div>
+      <div class="project-title">AI-Powered Content CMS</div>
+      <p class="project-desc">Headless CMS with GPT-based content suggestions, multilingual support, and a drag-and-drop page builder. White-labelled for 3 clients.</p>
+      <div class="project-tech">
+        <span class="tech-badge">Python</span>
+        <span class="tech-badge">FastAPI</span>
+        <span class="tech-badge">OpenAI</span>
+        <span class="tech-badge">React</span>
+      </div>
+      <div class="project-link">View Case Study</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="about-wrap">
+    <div class="about-left">
+      <div class="page-eyebrow">// about me</div>
+      <h2 class="page-title">Who I am</h2>
+      <p class="about-bio">
+        I'm a <strong>full-stack software developer</strong> who cares about writing clean, maintainable code and shipping things that actually work. I've built everything from startup MVPs to enterprise-grade platforms.<br/><br/>
+        When I'm not in the terminal, I'm probably breaking something in my homelab, reading about distributed systems, or tweaking my dotfiles.
+      </p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year">2024</div>
+          <div>
+            <div class="tl-title">Senior Developer</div>
+            <div class="tl-sub">Your Company / Freelance</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2022</div>
+          <div>
+            <div class="tl-title">Mid-Level Engineer</div>
+            <div class="tl-sub">Previous Company</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2020</div>
+          <div>
+            <div class="tl-title">B.Sc. Computer Science</div>
+            <div class="tl-sub">Your University</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="page-eyebrow" style="margin-bottom:2rem">// skill proficiency</div>
+      <div class="skill-section">
+        <div class="skill-group">
+          <div class="skill-group-label">Frontend</div>
+          <div class="skill-bar-row"><span class="skill-bar-name">React</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div><span class="skill-pct">95%</span></div>
+          <div class="skill-bar-row"><span class="skill-bar-name">TypeScript</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div><span class="skill-pct">90%</span></div>
+          <div class="skill-bar-row"><span class="skill-bar-name">CSS/Design</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div><span class="skill-pct">80%</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Backend</div>
+          <div class="skill-bar-row"><span class="skill-bar-name">Node.js</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div><span class="skill-pct">92%</span></div>
+          <div class="skill-bar-row"><span class="skill-bar-name">Python</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div><span class="skill-pct">85%</span></div>
+          <div class="skill-bar-row"><span class="skill-bar-name">PostgreSQL</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div><span class="skill-pct">88%</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">DevOps</div>
+          <div class="skill-bar-row"><span class="skill-bar-name">Docker</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div><span class="skill-pct">82%</span></div>
+          <div class="skill-bar-row"><span class="skill-bar-name">AWS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div><span class="skill-pct">75%</span></div>
+          <div class="skill-bar-row"><span class="skill-bar-name">CI/CD</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div><span class="skill-pct">78%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <div>
+        <div class="page-eyebrow">// get in touch</div>
+        <h2 class="page-title">Let's build something.</h2>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">@</div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <!-- REPLACE: your.email@gmail.com -->
+              <div class="contact-item-val">your.email@gmail.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">&lt;/&gt;</div>
+            <div>
+              <div class="contact-item-label">GitHub</div>
+              <!-- REPLACE: your GitHub URL -->
+              <div class="contact-item-val">github.com/yourusername</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">in</div>
+            <div>
+              <div class="contact-item-label">LinkedIn</div>
+              <!-- REPLACE: your LinkedIn URL -->
+              <div class="contact-item-val">linkedin.com/in/yourname</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-status">
+        <div class="status-dot"></div>
+        Available for freelance & full-time roles
+      </div>
+    </div>
+
+    <div class="contact-right">
+      <div class="page-eyebrow" style="margin-bottom:2rem">// send a message</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" type="text" id="fname" placeholder="John Doe"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" id="femail" placeholder="you@company.com"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <select class="form-select" id="fsubject">
+          <option value="">Select inquiry type</option>
+          <option value="Freelance Project Inquiry">Freelance Project</option>
+          <option value="Job Opportunity">Job Opportunity</option>
+          <option value="Collaboration">Collaboration</option>
+          <option value="General Inquiry">General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" id="fmessage" placeholder="Tell me about your project, timeline, and budget..."></textarea>
+      </div>
+      <button class="form-submit" onclick="sendEmail()">Send Message →</button>
+      <p class="form-note">This will open your email client with the message pre-filled.<br/>Your email is never stored or shared.</p>
+      <div class="success-msg" id="success-msg">✓ Opening your email client...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function sendEmail() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const subject = document.getElementById('fsubject').value || 'Portfolio Inquiry';
+  const message = document.getElementById('fmessage').value.trim();
+
+  if (!name || !email || !message) {
+    alert('Please fill in your name, email, and message.');
+    return;
+  }
+
+  const body = `Hi,\n\nName: ${name}\nEmail: ${email}\n\n${message}\n\n---\nSent from portfolio contact form.`;
+  // REPLACE: your.email@gmail.com below with your actual email
+  const mailto = `mailto:your.email@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  window.location.href = mailto;
+
+  const msg = document.getElementById('success-msg');
+  msg.style.display = 'block';
+  setTimeout(() => { msg.style.display = 'none'; }, 4000);
+}
+</script>
+</body>
+</html>
