@@ -1,910 +1,809 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dev Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<meta name="description" content="Teo Guan Lee Corporation Berhad — A trusted Malaysian heritage brand group since 1934."/>
+<title>TGL Corp – Teo Guan Lee Corporation Berhad</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0a0c0f;
-    --bg2: #111417;
-    --bg3: #181c21;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.13);
-    --accent: #00e5a0;
-    --accent2: #0af;
-    --text: #e8edf2;
-    --muted: #7a8694;
-    --mono: 'JetBrains Mono', monospace;
-    --sans: 'Syne', sans-serif;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2.5rem;
-    height: 60px;
-    background: rgba(10,12,15,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--accent);
-    letter-spacing: 0.04em;
-  }
-
-  .nav-logo span { color: var(--muted); }
-
-  .nav-links { display: flex; gap: 0; }
-
-  .nav-links button {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0 1.2rem;
-    height: 60px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .nav-links button:hover, .nav-links button.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
-
-  .page { display: none; padding-top: 60px; min-height: 100vh; }
-  .page.active { display: block; }
-
-  /* ========= HOME PAGE ========= */
-  .hero {
-    min-height: calc(100vh - 60px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 2.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 80%);
-  }
-
-  .hero-tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .hero-tag::before {
-    content: '';
-    width: 28px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .hero h1 {
-    font-family: var(--sans);
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 800;
-    line-height: 1.0;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-
-  .hero h1 .accent { color: var(--accent); }
-  .hero h1 .dim { color: var(--muted); }
-
-  .hero-sub {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--muted);
-    max-width: 480px;
-    line-height: 1.8;
-    margin-bottom: 2.5rem;
-    position: relative;
-  }
-
-  .hero-sub .highlight { color: var(--accent2); }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    position: relative;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #000;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: none;
-    padding: 0.75rem 1.75rem;
-    cursor: pointer;
-    transition: opacity 0.2s, transform 0.15s;
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-  }
-
-  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: 1px solid var(--border2);
-    padding: 0.75rem 1.75rem;
-    cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
-  }
-
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
-
-  .hero-stats {
-    position: absolute;
-    right: 2.5rem;
-    bottom: 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    text-align: right;
-  }
-
-  .stat-num {
-    font-family: var(--mono);
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-
-  .skills-strip {
-    padding: 1.5rem 2.5rem;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--bg2);
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-
-  .skill-tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 4px 12px;
-    background: var(--bg3);
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .skill-tag:hover { color: var(--accent); border-color: var(--accent); }
-
-  /* ========= PROJECTS PAGE ========= */
-  .projects-header {
-    padding: 4rem 2.5rem 2rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .page-eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.75rem;
-  }
-
-  .page-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--text);
-  }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
-    background: var(--border);
-    margin: 0;
-    border-top: 1px solid var(--border);
-  }
-
-  .project-card {
-    background: var(--bg);
-    padding: 2.5rem;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .project-card:hover { background: var(--bg2); }
-
-  .project-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px;
-    height: 0;
-    background: var(--accent);
-    transition: height 0.3s ease;
-  }
-
-  .project-card:hover::before { height: 100%; }
-
-  .project-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.25rem;
-  }
-
-  .project-title {
-    font-size: 1.35rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.75rem;
-    color: var(--text);
-  }
-
-  .project-desc {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-  }
-
-  .project-tech {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-  }
-
-  .tech-badge {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border: 1px solid var(--border2);
-    color: var(--accent2);
-  }
-
-  .project-link {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .project-link::after { content: '→'; }
-
-  /* ========= ABOUT PAGE ========= */
-  .about-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: calc(100vh - 60px);
-  }
-
-  .about-left {
-    padding: 4rem 3rem 4rem 2.5rem;
-    border-right: 1px solid var(--border);
-  }
-
-  .about-right {
-    padding: 4rem 2.5rem 4rem 3rem;
-  }
-
-  .about-bio {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 2;
-    margin-top: 1.5rem;
-  }
-
-  .about-bio strong { color: var(--text); font-weight: 600; }
-
-  .timeline { margin-top: 2rem; }
-
-  .tl-item {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 1rem;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .tl-year {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.08em;
-    padding-top: 2px;
-  }
-
-  .tl-title {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-
-  .tl-sub {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-  }
-
-  .skill-section { margin-top: 0; }
-  .skill-group { margin-bottom: 2rem; }
-
-  .skill-group-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    margin-bottom: 1rem;
-  }
-
-  .skill-bar-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-  }
-
-  .skill-bar-name {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text);
-    width: 80px;
-    flex-shrink: 0;
-  }
-
-  .skill-bar-track {
-    flex: 1;
-    height: 2px;
-    background: var(--border2);
-    position: relative;
-  }
-
-  .skill-bar-fill {
-    height: 100%;
-    background: var(--accent);
-    position: relative;
-  }
-
-  .skill-bar-fill::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: -3px;
-    width: 8px;
-    height: 8px;
-    background: var(--accent);
-    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-    transform: rotate(90deg);
-  }
-
-  .skill-pct {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    width: 30px;
-    text-align: right;
-  }
-
-  /* ========= CONTACT PAGE ========= */
-  .contact-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: calc(100vh - 60px);
-  }
-
-  .contact-left {
-    padding: 4rem 3rem 4rem 2.5rem;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .contact-info { margin-top: 2rem; }
-
-  .contact-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .contact-icon {
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--border2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    font-family: var(--mono);
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-
-  .contact-item-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
-
-  .contact-item-val {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text);
-  }
-
-  .contact-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 3rem;
-  }
-
-  .status-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .contact-right {
-    padding: 4rem 2.5rem 4rem 3rem;
-  }
-
-  .form-group { margin-bottom: 1.5rem; }
-
-  .form-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 8px;
-  }
-
-  .form-input, .form-textarea, .form-select {
-    width: 100%;
-    background: var(--bg2);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 13px;
-    padding: 0.75rem 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-    appearance: none;
-  }
-
-  .form-input:focus, .form-textarea:focus, .form-select:focus {
-    border-color: var(--accent);
-  }
-
-  .form-textarea { resize: vertical; min-height: 140px; }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-  .form-submit {
-    width: 100%;
-    background: var(--accent);
-    color: #000;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    border: none;
-    padding: 1rem;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    margin-top: 0.5rem;
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-  }
-
-  .form-submit:hover { opacity: 0.88; }
-
-  .form-note {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 0.75rem;
-    text-align: center;
-    line-height: 1.7;
-  }
-
-  .success-msg {
-    display: none;
-    background: rgba(0, 229, 160, 0.08);
-    border: 1px solid var(--accent);
-    padding: 1rem;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--accent);
-    margin-top: 1rem;
-    text-align: center;
-  }
+/* ============================================================
+   CUSTOMISATION GUIDE — quick reference
+   ============================================================
+   COLOURS  → edit the :root block below (~20 lines down)
+   LOGO     → search "nav-logo-mark" or "nav-logo-text"
+   FONTS    → edit the Google Fonts <link> above + --serif/--sans in :root
+   HERO     → search "hero-h1" and "hero-desc"
+   STATS    → search "stat-num" (3 instances in the hero)
+   CONTACT  → search "contact-item-val"
+   ============================================================ */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── COLOUR VARIABLES — edit these to retheme the whole site ── */
+:root{
+  --navy:     #0a1f3c;   /* main dark background (nav, hero, investor section) */
+  --navy2:    #132a50;   /* slightly lighter dark */
+  --navy3:    #1d3a6a;   /* hero right panel gradient */
+  --blue:     #1a5fb4;   /* primary accent — buttons, links, active states */
+  --blue2:    #2775d0;   /* hover state for blue elements */
+  --blue-light:#e8f0fb;  /* light blue tint for backgrounds */
+  --gold:     #c9a84c;   /* gold accent — nav badge, CTA buttons */
+  --gold2:    #e8c96a;   /* lighter gold — hero italic text, investor section */
+  --white:    #ffffff;
+  --off-white:#f7f9fc;   /* section background (About, Shop alternates) */
+  --text:     #1a2540;   /* main body text */
+  --muted:    #6b7a99;   /* secondary / caption text */
+  --border:   #dde3ef;   /* card borders and dividers */
+  --serif:    'Playfair Display', Georgia, serif;   /* headings font */
+  --sans:     'DM Sans', sans-serif;               /* body font */
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-x:hidden}
+
+/* ── PAGE SYSTEM ── */
+.page{display:none;padding-top:72px;min-height:calc(100vh - 72px)}
+.page.active{display:block}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 4rem;height:72px;
+  background:rgba(10,31,60,0.97);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
+
+/* ── LOGO — to use an image, replace nav-logo-mark with <img src="logo.png" style="height:38px"> ── */
+.nav-logo-mark{
+  width:38px;height:38px;background:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-weight:700;font-size:15px;color:var(--navy);
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+  flex-shrink:0;
+}
+.nav-logo-text{font-family:var(--serif);font-size:17px;color:var(--white);letter-spacing:0.02em;font-weight:600}
+.nav-logo-sub{font-size:9px;letter-spacing:0.18em;color:rgba(255,255,255,0.45);text-transform:uppercase;margin-top:1px;font-weight:300}
+
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links button{
+  font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.65);
+  background:none;border:none;padding:0 1.1rem;height:72px;
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:color 0.2s,border-color 0.2s;font-weight:500;font-family:var(--sans);
+}
+.nav-links button:hover{color:var(--white);border-bottom-color:var(--gold)}
+.nav-links button.active{color:var(--white);border-bottom-color:var(--gold)}
+.nav-cta{
+  background:var(--gold);color:var(--navy);
+  font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.55rem 1.25rem;border:none;cursor:pointer;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+  transition:opacity 0.2s;white-space:nowrap;font-family:var(--sans);
+}
+.nav-cta:hover{opacity:0.88}
+
+/* Mobile hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:rgba(255,255,255,0.7);transition:all 0.3s}
+.mobile-menu{
+  display:none;position:fixed;top:72px;left:0;right:0;z-index:199;
+  background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.1);
+  flex-direction:column;padding:1rem 0;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu button{
+  background:none;border:none;color:rgba(255,255,255,0.7);font-family:var(--sans);
+  font-size:13px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;
+  padding:0.85rem 2rem;text-align:left;cursor:pointer;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.mobile-menu button:hover{color:var(--white);background:rgba(255,255,255,0.04)}
+
+/* ── SHARED SECTION STYLES ── */
+.section-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.section-eyebrow-line{width:24px;height:1px;background:var(--blue)}
+.section-eyebrow-text{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);font-weight:500}
+.section-title{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;color:var(--navy);line-height:1.2;letter-spacing:-0.01em}
+.section-sub{font-size:15px;color:var(--muted);line-height:1.8;max-width:500px;margin-top:0.75rem;font-weight:300}
+.btn-gold{background:var(--gold);color:var(--navy);font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.85rem 2rem;border:none;cursor:pointer;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:opacity 0.2s,transform 0.15s;font-family:var(--sans)}
+.btn-gold:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:rgba(255,255,255,0.8);font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.85rem 2rem;border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:border-color 0.2s,color 0.2s;font-family:var(--sans)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-blue{background:var(--blue);color:#fff;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.85rem 2rem;border:none;cursor:pointer;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:opacity 0.2s;font-family:var(--sans)}
+.btn-blue:hover{opacity:0.88}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.55s ease,transform 0.55s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* =====================================================
+   PAGE 1: HOME
+   ===================================================== */
+.hero{
+  min-height:calc(100vh - 72px);background:var(--navy);
+  display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;
+}
+.hero-bg-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:60px 60px}
+.hero-bg-glow{position:absolute;right:-180px;top:50%;transform:translateY(-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(26,95,180,0.25) 0%,transparent 70%);pointer-events:none}
+.hero-left{padding:5rem 3rem 5rem 4rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
+.hero-since{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);font-weight:300;border:1px solid rgba(255,255,255,0.12);display:inline-flex;align-items:center;gap:8px;padding:5px 12px;margin-bottom:2rem;width:fit-content}
+.hero-since span{color:var(--gold2)}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:2rem}
+.hero-eyebrow-line{width:32px;height:1px;background:var(--gold)}
+.hero-eyebrow-text{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:500}
+
+/* ── HERO HEADLINE — change text between the tags ── */
+.hero-h1{font-family:var(--serif);font-size:clamp(2.6rem,4.5vw,4rem);color:var(--white);line-height:1.12;font-weight:700;letter-spacing:-0.01em;margin-bottom:1.75rem}
+.hero-h1 em{font-style:normal;color:var(--gold2)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,0.62);line-height:1.85;max-width:440px;margin-bottom:2.5rem;font-weight:300}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.hero-stats{display:flex;gap:2.5rem;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,0.1)}
+.stat-num{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--white);line-height:1}
+.stat-num sup{font-size:1rem;color:var(--gold)}
+.stat-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:4px}
+.hero-right{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;padding:5rem 4rem 5rem 2rem}
+.brand-mosaic{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:400px}
+.brand-tile{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:1.5rem;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;min-height:120px;position:relative;overflow:hidden;transition:border-color 0.2s,background 0.2s;cursor:pointer}
+.brand-tile:hover{background:rgba(255,255,255,0.09);border-color:rgba(201,168,76,0.4)}
+.brand-tile.featured{grid-column:1/-1;background:linear-gradient(135deg,var(--navy3) 0%,var(--blue) 100%);border-color:rgba(201,168,76,0.3);min-height:90px;flex-direction:row;align-items:center;justify-content:space-between}
+.brand-tile-badge{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;background:var(--gold);color:var(--navy);padding:2px 7px;font-weight:500;margin-bottom:8px;display:inline-block}
+.brand-tile-tag{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px}
+.brand-tile-name{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--white)}
+.brand-tile-count{font-family:var(--serif);font-size:2.5rem;font-weight:700;color:rgba(255,255,255,0.12);position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none}
+.klse-badge{position:absolute;top:1rem;right:1rem;z-index:2;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold2);padding:4px 10px;display:flex;align-items:center;gap:5px}
+.klse-dot{width:5px;height:5px;border-radius:50%;background:var(--gold2);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* Quick links on homepage */
+.home-quicklinks{background:var(--off-white);padding:4rem;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ql-card{background:var(--white);border:1px solid var(--border);padding:2rem 1.5rem;cursor:pointer;transition:border-color 0.2s,transform 0.2s;position:relative;overflow:hidden}
+.ql-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--blue);transition:height 0.3s}
+.ql-card:hover{border-color:var(--blue);transform:translateY(-2px)}
+.ql-card:hover::before{height:100%}
+.ql-icon{font-size:22px;margin-bottom:1rem}
+.ql-title{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
+.ql-desc{font-size:12px;color:var(--muted);line-height:1.7;font-weight:300}
+.ql-arrow{font-size:12px;color:var(--blue);margin-top:1rem;letter-spacing:0.08em;text-transform:uppercase}
+
+/* =====================================================
+   PAGE 2: ABOUT
+   ===================================================== */
+.about-hero{background:var(--navy);padding:5rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;min-height:380px}
+.about-hero .section-eyebrow-line{background:var(--gold)}
+.about-hero .section-eyebrow-text{color:var(--gold)}
+.about-hero .section-title{color:var(--white)}
+.about-hero .section-sub{color:rgba(255,255,255,0.55)}
+.about-hero-right{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.about-metric{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:1.5rem;border-left:3px solid var(--gold)}
+.about-metric-num{font-family:var(--serif);font-size:2.2rem;font-weight:700;color:var(--white)}
+.about-metric-num sup{font-size:1rem;color:var(--gold)}
+.about-metric-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-top:4px}
+
+.about-story{padding:5rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;background:var(--white)}
+.about-body{font-size:15px;color:var(--muted);line-height:1.9;font-weight:300;margin-top:1.5rem}
+.about-body strong{color:var(--navy);font-weight:500}
+
+.timeline{margin-top:2.5rem}
+.tl-row{display:grid;grid-template-columns:70px 1fr;padding:1.1rem 0;border-bottom:1px solid var(--border);gap:1rem;align-items:start}
+.tl-year{font-family:var(--serif);font-size:13px;color:var(--blue);font-weight:600;padding-top:2px}
+.tl-desc{font-size:13px;color:var(--text);line-height:1.6}
+.tl-desc span{font-size:11px;color:var(--muted);display:block;margin-top:2px}
+
+.values-strip{background:var(--off-white);padding:5rem 4rem}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2.5rem}
+.value-card{background:var(--white);border:1px solid var(--border);padding:2rem;border-top:3px solid var(--blue)}
+.value-icon{font-size:24px;margin-bottom:1rem}
+.value-title{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
+.value-desc{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300}
+
+.listed-badge{background:var(--navy);padding:1.5rem;display:flex;align-items:center;gap:1rem;margin-top:2rem}
+.listed-badge-icon{width:44px;height:44px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--serif);font-weight:700;font-size:14px;color:var(--navy)}
+.listed-badge-text{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6}
+.listed-badge-text strong{color:var(--white);font-weight:500;display:block}
+
+/* =====================================================
+   PAGE 3: BRANDS
+   ===================================================== */
+.brands-hero{background:var(--navy);padding:5rem 4rem;min-height:280px;display:flex;flex-direction:column;justify-content:center}
+.brands-hero .section-eyebrow-line{background:var(--gold)}
+.brands-hero .section-eyebrow-text{color:var(--gold)}
+.brands-hero .section-title{color:var(--white)}
+.brands-hero .section-sub{color:rgba(255,255,255,0.55)}
+
+.brands-body{padding:4rem;background:var(--white)}
+.brands-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:2.5rem}
+.brands-tab{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;padding:0.75rem 1.5rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;transition:color 0.2s,border-color 0.2s;font-family:var(--sans)}
+.brands-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+
+.brands-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.brand-card{border:1px solid var(--border);background:var(--white);padding:2.5rem;position:relative;overflow:hidden;transition:border-color 0.2s,transform 0.2s}
+.brand-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--blue);transition:height 0.3s}
+.brand-card:hover{border-color:var(--blue);transform:translateY(-2px)}
+.brand-card:hover::before{height:100%}
+.brand-card-cat{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem}
+.brand-card-name{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:0.75rem}
+.brand-card-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;font-weight:300}
+.brand-card-links{display:flex;gap:1rem;flex-wrap:wrap}
+.brand-shop-link{display:inline-flex;align-items:center;gap:5px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);color:var(--text);text-decoration:none;transition:border-color 0.2s,color 0.2s}
+.brand-shop-link:hover{border-color:var(--blue);color:var(--blue)}
+.brand-shop-link.shopee{border-color:#ffd4c2;color:#ee4d2d}
+.brand-shop-link.lazada{border-color:#d4d0f5;color:#4c35ae}
+
+.licensing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.license-card{border:1px solid var(--border);background:var(--off-white);padding:1.5rem;transition:border-color 0.2s}
+.license-card:hover{border-color:var(--blue)}
+.license-card-licensor{font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.license-card-name{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:3px}
+.license-card-tag{font-size:11px;color:var(--muted)}
+
+/* =====================================================
+   PAGE 4: INVESTORS
+   ===================================================== */
+.inv-hero{background:var(--navy);padding:5rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;min-height:340px}
+.inv-hero .section-eyebrow-line{background:var(--gold)}
+.inv-hero .section-eyebrow-text{color:var(--gold)}
+.inv-hero .section-title{color:var(--white)}
+.inv-hero .section-sub{color:rgba(255,255,255,0.55)}
+.stock-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);padding:1.75rem;margin-top:1.5rem}
+.stock-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px}
+.stock-ticker{font-family:var(--serif);font-size:1.75rem;font-weight:700;color:var(--white)}
+.stock-exchange{font-size:12px;color:rgba(255,255,255,0.4);margin-left:8px}
+.inv-hero-right{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.inv-stat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:1.5rem;border-left:3px solid var(--gold)}
+.inv-stat-num{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--white)}
+.inv-stat-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:4px}
+
+.inv-docs{padding:5rem 4rem;background:var(--white)}
+.inv-docs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2.5rem}
+.inv-doc-card{border:1px solid var(--border);padding:2rem;transition:border-color 0.2s,transform 0.2s;cursor:pointer}
+.inv-doc-card:hover{border-color:var(--blue);transform:translateY(-2px)}
+.inv-doc-icon{font-size:24px;margin-bottom:1rem}
+.inv-doc-title{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:6px}
+.inv-doc-desc{font-size:12px;color:var(--muted);line-height:1.7;font-weight:300}
+.inv-doc-link{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-top:1rem;display:block}
+
+.governance-strip{background:var(--off-white);padding:5rem 4rem}
+.governance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:2.5rem}
+.gov-item{background:var(--white);border:1px solid var(--border);padding:1.5rem;border-left:3px solid var(--blue);cursor:pointer;transition:border-color 0.2s}
+.gov-item:hover{border-left-color:var(--gold)}
+.gov-item-title{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:4px}
+.gov-item-desc{font-size:11px;color:var(--muted);line-height:1.6}
+
+/* =====================================================
+   PAGE 5: CONTACT
+   ===================================================== */
+.contact-hero{background:var(--navy);padding:5rem 4rem;min-height:280px;display:flex;flex-direction:column;justify-content:center}
+.contact-hero .section-eyebrow-line{background:var(--gold)}
+.contact-hero .section-eyebrow-text{color:var(--gold)}
+.contact-hero .section-title{color:var(--white)}
+.contact-hero .section-sub{color:rgba(255,255,255,0.55)}
+
+.contact-body{padding:5rem 4rem;background:var(--white);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.office-cards{display:flex;flex-direction:column;gap:16px;margin-top:1.5rem}
+.office-card{border:1px solid var(--border);padding:2rem;border-left:3px solid var(--blue)}
+.office-card-name{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:1rem}
+.office-row{display:flex;gap:10px;font-size:13px;color:var(--muted);margin-bottom:6px;align-items:flex-start;line-height:1.5}
+.office-row strong{color:var(--navy);font-weight:500;min-width:50px;flex-shrink:0}
+
+.contact-form{background:var(--off-white);border:1px solid var(--border);padding:2.5rem}
+.form-title{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:var(--navy);margin-bottom:1.5rem}
+.form-group{margin-bottom:1.25rem}
+.form-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;font-weight:500}
+.form-input,.form-textarea,.form-select{width:100%;background:var(--white);border:1px solid var(--border);color:var(--text);font-family:var(--sans);font-size:13px;padding:0.75rem 1rem;outline:none;transition:border-color 0.2s;appearance:none}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--blue)}
+.form-textarea{resize:vertical;min-height:130px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-submit{width:100%;background:var(--blue);color:#fff;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;border:none;padding:1rem;cursor:pointer;transition:opacity 0.2s;margin-top:0.5rem;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))}
+.form-submit:hover{opacity:0.88}
+.form-note{font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.6}
+.form-success{display:none;background:#e8f5e9;border:1px solid #a5d6a7;padding:1rem;font-size:13px;color:#2e7d32;text-align:center;margin-top:0.75rem}
+
+/* ── FOOTER (shared) ── */
+footer{background:var(--navy);padding:3rem 4rem;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:2rem;border-top:1px solid rgba(255,255,255,0.06)}
+.footer-logo{font-family:var(--serif);font-size:16px;color:var(--white);font-weight:700;margin-bottom:8px}
+.footer-tagline{font-size:12px;color:rgba(255,255,255,0.35);line-height:1.7;font-weight:300;max-width:200px}
+.footer-col-title{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1rem;font-weight:500}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;cursor:pointer;transition:color 0.2s}
+.footer-links a:hover{color:var(--white)}
+.footer-bottom{background:rgba(0,0,0,0.3);padding:1.25rem 4rem;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.3)}
+.footer-bottom a{color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.2s;cursor:pointer}
+.footer-bottom a:hover{color:rgba(255,255,255,0.7)}
+.footer-bottom-right{display:flex;gap:1.5rem}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:0 1.5rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .nav-cta{display:none}
+  .hero,.about-story,.about-hero,.inv-hero,.contact-body{grid-template-columns:1fr;gap:2.5rem}
+  .hero-left,.hero-right,.about-hero,.inv-hero,.brands-hero,.contact-hero{padding:2.5rem 1.5rem}
+  .about-story,.values-strip,.brands-body,.inv-docs,.governance-strip,.contact-body{padding:3rem 1.5rem}
+  .home-quicklinks{grid-template-columns:1fr 1fr;padding:3rem 1.5rem}
+  .brands-grid{grid-template-columns:1fr}
+  .licensing-grid{grid-template-columns:1fr 1fr}
+  .inv-docs-grid,.governance-grid,.values-grid{grid-template-columns:1fr}
+  .about-hero-right,.inv-hero-right{grid-template-columns:1fr 1fr}
+  footer{grid-template-columns:1fr 1fr;padding:2.5rem 1.5rem;gap:1.5rem}
+  .footer-bottom{padding:1rem 1.5rem;flex-direction:column;gap:0.5rem;text-align:center}
+  .hero-stats{gap:1.5rem}
+  .form-row{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
+<!-- ── NAV ── -->
 <nav>
-  <div class="nav-logo"><span>~/</span>portfolio</div>
-  <div class="nav-links">
-    <button class="active" onclick="showPage('home', this)">home</button>
-    <button onclick="showPage('projects', this)">projects</button>
-    <button onclick="showPage('about', this)">about</button>
-    <button onclick="showPage('contact', this)">contact</button>
+  <div class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-mark">TGL</div>
+    <div>
+      <div class="nav-logo-text">Teo Guan Lee</div>
+      <div class="nav-logo-sub">Corporation Berhad</div>
+    </div>
   </div>
+  <ul class="nav-links">
+    <li><button class="active" onclick="showPage('home')">Home</button></li>
+    <li><button onclick="showPage('about')">About</button></li>
+    <li><button onclick="showPage('brands')">Brands</button></li>
+    <li><button onclick="showPage('investors')">Investors</button></li>
+    <li><button onclick="showPage('contact')">Contact</button></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <button class="nav-cta" onclick="showPage('investors')">Investor Relations</button>
 </nav>
 
-<!-- HOME -->
+<div class="mobile-menu" id="mobile-menu">
+  <button onclick="showPage('home');closeMobile()">Home</button>
+  <button onclick="showPage('about');closeMobile()">About Us</button>
+  <button onclick="showPage('brands');closeMobile()">Our Brands</button>
+  <button onclick="showPage('investors');closeMobile()">Investors</button>
+  <button onclick="showPage('contact');closeMobile()">Contact</button>
+</div>
+
+<!-- =====================================================
+     PAGE: HOME
+     ===================================================== -->
 <div class="page active" id="page-home">
+
   <div class="hero">
-    <div class="hero-grid"></div>
-    <div class="hero-tag">Available for hire</div>
-    <h1>
-      Building<br/>
-      <span class="accent">digital</span><br/>
-      <span class="dim">products.</span>
-    </h1>
-    <p class="hero-sub">
-      Full-stack developer crafting <span class="highlight">fast</span>, <span class="highlight">scalable</span>, and <span class="highlight">elegant</span> web applications. From API architecture to pixel-perfect UIs.
-    </p>
-    <div class="hero-cta">
-      <button class="btn-primary" onclick="showPage('projects', document.querySelectorAll('.nav-links button')[1])">View Projects</button>
-      <button class="btn-secondary" onclick="showPage('contact', document.querySelectorAll('.nav-links button')[3])">Get In Touch</button>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">4+</div>
-        <div class="stat-label">Years exp.</div>
+    <div class="hero-bg-lines"></div>
+    <div class="hero-bg-glow"></div>
+    <div class="hero-left">
+      <div class="hero-since">Established <span>1934</span> &nbsp;·&nbsp; Bursa Malaysia Listed</div>
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <div class="hero-eyebrow-text">Malaysia's Heritage Brand Group</div>
       </div>
-      <div>
-        <div class="stat-num">20+</div>
-        <div class="stat-label">Projects</div>
-      </div>
-      <div>
-        <div class="stat-num">12+</div>
-        <div class="stat-label">Clients</div>
-      </div>
-    </div>
-  </div>
-  <div class="skills-strip">
-    <div class="skill-tag">React</div>
-    <div class="skill-tag">Node.js</div>
-    <div class="skill-tag">TypeScript</div>
-    <div class="skill-tag">PostgreSQL</div>
-    <div class="skill-tag">Docker</div>
-    <div class="skill-tag">AWS</div>
-    <div class="skill-tag">Python</div>
-    <div class="skill-tag">GraphQL</div>
-    <div class="skill-tag">Next.js</div>
-    <div class="skill-tag">Redis</div>
-    <div class="skill-tag">Figma</div>
-    <div class="skill-tag">CI/CD</div>
-  </div>
-</div>
-
-<!-- PROJECTS -->
-<div class="page" id="page-projects">
-  <div class="projects-header">
-    <div class="page-eyebrow">// selected work</div>
-    <h2 class="page-title">Projects</h2>
-  </div>
-  <div class="projects-grid">
-
-    <div class="project-card">
-      <div class="project-num">01 — 2024</div>
-      <div class="project-title">E-Commerce Platform</div>
-      <p class="project-desc">A full-stack marketplace with real-time inventory, Stripe payments, and an admin dashboard. Handles 10k+ concurrent users with Redis caching.</p>
-      <div class="project-tech">
-        <span class="tech-badge">Next.js</span>
-        <span class="tech-badge">PostgreSQL</span>
-        <span class="tech-badge">Stripe</span>
-        <span class="tech-badge">Redis</span>
-      </div>
-      <div class="project-link">View Case Study</div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-num">02 — 2024</div>
-      <div class="project-title">Real-Time Analytics Dashboard</div>
-      <p class="project-desc">Business intelligence tool with live data pipelines, custom chart components, and role-based access control. Deployed on AWS ECS.</p>
-      <div class="project-tech">
-        <span class="tech-badge">React</span>
-        <span class="tech-badge">Node.js</span>
-        <span class="tech-badge">WebSockets</span>
-        <span class="tech-badge">AWS</span>
-      </div>
-      <div class="project-link">View Case Study</div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-num">03 — 2023</div>
-      <div class="project-title">Developer API & SDK</div>
-      <p class="project-desc">RESTful + GraphQL API serving 500+ third-party integrations. Includes auto-generated docs, rate limiting, and OAuth 2.0 authentication.</p>
-      <div class="project-tech">
-        <span class="tech-badge">GraphQL</span>
-        <span class="tech-badge">TypeScript</span>
-        <span class="tech-badge">OAuth 2.0</span>
-        <span class="tech-badge">Docker</span>
-      </div>
-      <div class="project-link">View Case Study</div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-num">04 — 2023</div>
-      <div class="project-title">AI-Powered Content CMS</div>
-      <p class="project-desc">Headless CMS with GPT-based content suggestions, multilingual support, and a drag-and-drop page builder. White-labelled for 3 clients.</p>
-      <div class="project-tech">
-        <span class="tech-badge">Python</span>
-        <span class="tech-badge">FastAPI</span>
-        <span class="tech-badge">OpenAI</span>
-        <span class="tech-badge">React</span>
-      </div>
-      <div class="project-link">View Case Study</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ABOUT -->
-<div class="page" id="page-about">
-  <div class="about-wrap">
-    <div class="about-left">
-      <div class="page-eyebrow">// about me</div>
-      <h2 class="page-title">Who I am</h2>
-      <p class="about-bio">
-        I'm a <strong>full-stack software developer</strong> who cares about writing clean, maintainable code and shipping things that actually work. I've built everything from startup MVPs to enterprise-grade platforms.<br/><br/>
-        When I'm not in the terminal, I'm probably breaking something in my homelab, reading about distributed systems, or tweaking my dotfiles.
+      <!-- HERO HEADLINE — edit the text below -->
+      <h1 class="hero-h1">
+        Dressing Malaysian<br/>
+        Families for <em>Generations</em>
+      </h1>
+      <!-- HERO DESCRIPTION — edit the paragraph below -->
+      <p class="hero-desc">
+        From a single enterprise in 1934 to a publicly listed group, Teo Guan Lee Corporation distributes beloved children's and family wear brands across East and West Malaysia — in department stores, online marketplaces, and beyond.
       </p>
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-year">2024</div>
-          <div>
-            <div class="tl-title">Senior Developer</div>
-            <div class="tl-sub">Your Company / Freelance</div>
-          </div>
+      <div class="hero-actions">
+        <button class="btn-gold" onclick="showPage('brands')">Explore Our Brands</button>
+        <button class="btn-outline" onclick="showPage('investors')">Investor Relations</button>
+      </div>
+      <!-- STATS — edit the 3 numbers and labels -->
+      <div class="hero-stats">
+        <div><div class="stat-num">90<sup>+</sup></div><div class="stat-label">Years of heritage</div></div>
+        <div><div class="stat-num">12<sup>+</sup></div><div class="stat-label">Brand licences</div></div>
+        <div><div class="stat-num">2</div><div class="stat-label">National offices</div></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="klse-badge"><div class="klse-dot"></div>KLSE Listed</div>
+      <div class="brand-mosaic">
+        <div class="brand-tile" onclick="showPage('brands')">
+          <div class="brand-tile-badge">Home brand</div>
+          <div class="brand-tile-tag">Children's wear</div>
+          <div class="brand-tile-name">KikiLala</div>
+          <div class="brand-tile-count">01</div>
         </div>
-        <div class="tl-item">
-          <div class="tl-year">2022</div>
-          <div>
-            <div class="tl-title">Mid-Level Engineer</div>
-            <div class="tl-sub">Previous Company</div>
-          </div>
+        <div class="brand-tile" onclick="showPage('brands')">
+          <div class="brand-tile-badge">Home brand</div>
+          <div class="brand-tile-tag">Kids fashion</div>
+          <div class="brand-tile-name">KIKO</div>
+          <div class="brand-tile-count">02</div>
         </div>
-        <div class="tl-item">
-          <div class="tl-year">2020</div>
+        <div class="brand-tile" onclick="showPage('brands')">
+          <div class="brand-tile-badge">Home brand</div>
+          <div class="brand-tile-tag">Infant & toddler</div>
+          <div class="brand-tile-name">Cuddles</div>
+          <div class="brand-tile-count">03</div>
+        </div>
+        <div class="brand-tile" onclick="showPage('brands')">
+          <div class="brand-tile-badge">Home brand</div>
+          <div class="brand-tile-tag">Premium wear</div>
+          <div class="brand-tile-name">Pronic</div>
+          <div class="brand-tile-count">04</div>
+        </div>
+        <div class="brand-tile featured" onclick="showPage('brands')">
           <div>
-            <div class="tl-title">B.Sc. Computer Science</div>
-            <div class="tl-sub">Your University</div>
+            <div class="brand-tile-tag">Licensing portfolio</div>
+            <div class="brand-tile-name" style="font-size:0.95rem">PowerPuff Girls · DreamWorks · Garfield · TMNT · Tom & Jerry</div>
           </div>
+          <div style="font-family:var(--serif);font-size:2rem;font-weight:700;color:rgba(255,255,255,0.18);flex-shrink:0">8+</div>
         </div>
       </div>
     </div>
-    <div class="about-right">
-      <div class="page-eyebrow" style="margin-bottom:2rem">// skill proficiency</div>
-      <div class="skill-section">
-        <div class="skill-group">
-          <div class="skill-group-label">Frontend</div>
-          <div class="skill-bar-row"><span class="skill-bar-name">React</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div><span class="skill-pct">95%</span></div>
-          <div class="skill-bar-row"><span class="skill-bar-name">TypeScript</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div><span class="skill-pct">90%</span></div>
-          <div class="skill-bar-row"><span class="skill-bar-name">CSS/Design</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div><span class="skill-pct">80%</span></div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-label">Backend</div>
-          <div class="skill-bar-row"><span class="skill-bar-name">Node.js</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div><span class="skill-pct">92%</span></div>
-          <div class="skill-bar-row"><span class="skill-bar-name">Python</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div><span class="skill-pct">85%</span></div>
-          <div class="skill-bar-row"><span class="skill-bar-name">PostgreSQL</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div><span class="skill-pct">88%</span></div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-label">DevOps</div>
-          <div class="skill-bar-row"><span class="skill-bar-name">Docker</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div><span class="skill-pct">82%</span></div>
-          <div class="skill-bar-row"><span class="skill-bar-name">AWS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div><span class="skill-pct">75%</span></div>
-          <div class="skill-bar-row"><span class="skill-bar-name">CI/CD</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div><span class="skill-pct">78%</span></div>
-        </div>
-      </div>
+  </div>
+
+  <!-- Quick nav cards -->
+  <div class="home-quicklinks">
+    <div class="ql-card" onclick="showPage('about')">
+      <div class="ql-icon">🏛️</div>
+      <div class="ql-title">Our Story</div>
+      <div class="ql-desc">Nine decades of heritage, from a Penang general merchant to a nationally listed group.</div>
+      <div class="ql-arrow">Learn more →</div>
     </div>
+    <div class="ql-card" onclick="showPage('brands')">
+      <div class="ql-icon">👕</div>
+      <div class="ql-title">Our Brands</div>
+      <div class="ql-desc">4 home brands and 8+ licensed characters — clothing families love, at every stage.</div>
+      <div class="ql-arrow">View brands →</div>
+    </div>
+    <div class="ql-card" onclick="showPage('investors')">
+      <div class="ql-icon">📈</div>
+      <div class="ql-title">Investor Relations</div>
+      <div class="ql-desc">Bursa Malaysia disclosures, annual reports, governance policies and board information.</div>
+      <div class="ql-arrow">View IR →</div>
+    </div>
+    <div class="ql-card" onclick="showPage('contact')">
+      <div class="ql-icon">✉️</div>
+      <div class="ql-title">Contact Us</div>
+      <div class="ql-desc">Wholesale enquiries, investor correspondence, or general questions — we're here.</div>
+      <div class="ql-arrow">Get in touch →</div>
+    </div>
+  </div>
+
+  <footer>
+    <div><div class="footer-logo">Teo Guan Lee</div><div class="footer-tagline">Dressing Malaysian families since 1934. Publicly listed on Bursa Malaysia.</div></div>
+    <div><div class="footer-col-title">Company</div><div class="footer-links"><a onclick="showPage('about')">About Us</a><a onclick="showPage('brands')">Our Brands</a><a onclick="showPage('investors')">Investors</a><a onclick="showPage('contact')">Contact</a></div></div>
+    <div><div class="footer-col-title">Investors</div><div class="footer-links"><a onclick="showPage('investors')">KLSE Announcements</a><a onclick="showPage('investors')">Annual Reports</a><a onclick="showPage('investors')">Board Charter</a><a onclick="showPage('investors')">Governance</a></div></div>
+    <div><div class="footer-col-title">Brands</div><div class="footer-links"><a onclick="showPage('brands')">KikiLala</a><a onclick="showPage('brands')">KIKO</a><a onclick="showPage('brands')">Cuddles</a><a onclick="showPage('brands')">Pronic</a></div></div>
+  </footer>
+  <div class="footer-bottom">
+    <span>© <span class="yr"></span> Teo Guan Lee Corporation Berhad. All rights reserved.</span>
+    <div class="footer-bottom-right"><a>Privacy Policy</a><a>Terms of Use</a><a>Sitemap</a></div>
   </div>
 </div>
 
-<!-- CONTACT -->
-<div class="page" id="page-contact">
-  <div class="contact-wrap">
-    <div class="contact-left">
-      <div>
-        <div class="page-eyebrow">// get in touch</div>
-        <h2 class="page-title">Let's build something.</h2>
-        <div class="contact-info">
-          <div class="contact-item">
-            <div class="contact-icon">@</div>
-            <div>
-              <div class="contact-item-label">Email</div>
-              <!-- REPLACE: your.email@gmail.com -->
-              <div class="contact-item-val">your.email@gmail.com</div>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon">&lt;/&gt;</div>
-            <div>
-              <div class="contact-item-label">GitHub</div>
-              <!-- REPLACE: your GitHub URL -->
-              <div class="contact-item-val">github.com/yourusername</div>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-icon">in</div>
-            <div>
-              <div class="contact-item-label">LinkedIn</div>
-              <!-- REPLACE: your LinkedIn URL -->
-              <div class="contact-item-val">linkedin.com/in/yourname</div>
-            </div>
+<!-- =====================================================
+     PAGE: ABOUT
+     ===================================================== -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div>
+      <div class="section-eyebrow"><div class="section-eyebrow-line" style="background:var(--gold)"></div><div class="section-eyebrow-text" style="color:var(--gold)">Our Story</div></div>
+      <h1 class="section-title" style="color:var(--white)">A Malaysian heritage built over nine decades</h1>
+      <p class="section-sub" style="color:rgba(255,255,255,0.55)">From a small enterprise in 1934 to a publicly listed group — TGL Corp is one of Malaysia's most enduring apparel distribution businesses.</p>
+    </div>
+    <div class="about-hero-right">
+      <div class="about-metric"><div class="about-metric-num">90<sup>+</sup></div><div class="about-metric-label">Years in business</div></div>
+      <div class="about-metric"><div class="about-metric-num">12<sup>+</sup></div><div class="about-metric-label">Active brands</div></div>
+      <div class="about-metric"><div class="about-metric-num">2</div><div class="about-metric-label">National offices</div></div>
+      <div class="about-metric"><div class="about-metric-num">8<sup>+</sup></div><div class="about-metric-label">Licensed IPs</div></div>
+    </div>
+  </div>
+
+  <div class="about-story reveal">
+    <div>
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><div class="section-eyebrow-text">Company history</div></div>
+      <h2 class="section-title">How we grew</h2>
+      <p class="about-body">
+        Teo Guan Lee (TGL) began as a <strong>small enterprise dealing in general merchandise in 1934</strong>. Over the decades, it diversified into the distribution of branded and licensed baby, children's, and adult wear — growing its presence across <strong>major department stores throughout East and West Malaysia</strong>.
+        <br/><br/>
+        Today, as a publicly listed corporation on Bursa Malaysia, TGL Corp manages a portfolio of four home-grown brands and over eight internationally licensed characters, serving Malaysian families at every stage of childhood.
+      </p>
+      <div class="listed-badge">
+        <div class="listed-badge-icon">TGL</div>
+        <div class="listed-badge-text"><strong>Bursa Malaysia (KLSE) Listed</strong>Teo Guan Lee Corporation Berhad — subject to full corporate governance and continuous disclosure obligations.</div>
+      </div>
+    </div>
+    <div>
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><div class="section-eyebrow-text">Timeline</div></div>
+      <h2 class="section-title">Our journey</h2>
+      <div class="timeline">
+        <div class="tl-row"><div class="tl-year">1934</div><div class="tl-desc">Founded as a general merchandise enterprise<span>Penang, Malaysia</span></div></div>
+        <div class="tl-row"><div class="tl-year">1980s</div><div class="tl-desc">Expanded into branded apparel distribution<span>Nationwide department store presence</span></div></div>
+        <div class="tl-row"><div class="tl-year">1990s</div><div class="tl-desc">Launched home brands KikiLala and KIKO<span>Children's wear becomes core business</span></div></div>
+        <div class="tl-row"><div class="tl-year">2000s</div><div class="tl-desc">Secured international licensing agreements<span>DreamWorks, Cartoon Network, Nickelodeon & more</span></div></div>
+        <div class="tl-row"><div class="tl-year">Today</div><div class="tl-desc">Publicly listed on Bursa Malaysia<span>4 home brands · 8+ licensed IPs · 2 offices</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="values-strip reveal">
+    <div class="section-eyebrow"><div class="section-eyebrow-line"></div><div class="section-eyebrow-text">Core values</div></div>
+    <h2 class="section-title">What we stand for</h2>
+    <div class="values-grid">
+      <div class="value-card"><div class="value-icon">🤝</div><div class="value-title">Integrity</div><div class="value-desc">We operate with transparency and honesty in all business dealings — with partners, customers, and shareholders alike.</div></div>
+      <div class="value-card"><div class="value-icon">⭐</div><div class="value-title">Quality</div><div class="value-desc">Every product under the TGL Corp umbrella meets high standards of material quality, design, and safety for families.</div></div>
+      <div class="value-card"><div class="value-icon">🌱</div><div class="value-title">Growth</div><div class="value-desc">We reinvest in our brands, our people, and our communities — building a business that grows sustainably for the long term.</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div><div class="footer-logo">Teo Guan Lee</div><div class="footer-tagline">Dressing Malaysian families since 1934. Publicly listed on Bursa Malaysia.</div></div>
+    <div><div class="footer-col-title">Company</div><div class="footer-links"><a onclick="showPage('about')">About Us</a><a onclick="showPage('brands')">Our Brands</a><a onclick="showPage('investors')">Investors</a><a onclick="showPage('contact')">Contact</a></div></div>
+    <div><div class="footer-col-title">Investors</div><div class="footer-links"><a onclick="showPage('investors')">KLSE Announcements</a><a onclick="showPage('investors')">Annual Reports</a><a onclick="showPage('investors')">Board Charter</a></div></div>
+    <div><div class="footer-col-title">Brands</div><div class="footer-links"><a onclick="showPage('brands')">KikiLala</a><a onclick="showPage('brands')">KIKO</a><a onclick="showPage('brands')">Cuddles</a><a onclick="showPage('brands')">Pronic</a></div></div>
+  </footer>
+  <div class="footer-bottom"><span>© <span class="yr"></span> Teo Guan Lee Corporation Berhad. All rights reserved.</span><div class="footer-bottom-right"><a>Privacy Policy</a><a>Terms of Use</a></div></div>
+</div>
+
+<!-- =====================================================
+     PAGE: BRANDS
+     ===================================================== -->
+<div class="page" id="page-brands">
+  <div class="brands-hero">
+    <div class="section-eyebrow"><div class="section-eyebrow-line" style="background:var(--gold)"></div><div class="section-eyebrow-text" style="color:var(--gold)">Our Portfolio</div></div>
+    <h1 class="section-title" style="color:var(--white)">Brands that families trust</h1>
+    <p class="section-sub" style="color:rgba(255,255,255,0.55)">From newborn essentials to licensed character wear — our portfolio covers every stage of childhood, available in stores and online nationwide.</p>
+  </div>
+
+  <div class="brands-body reveal">
+    <div class="brands-tabs">
+      <button class="brands-tab active" onclick="switchBrandTab('home',this)">Home Brands</button>
+      <button class="brands-tab" onclick="switchBrandTab('licensing',this)">Licensing Brands</button>
+    </div>
+
+    <div id="btab-home">
+      <div class="brands-grid">
+        <div class="brand-card">
+          <div class="brand-card-cat">Children's wear</div>
+          <div class="brand-card-name">KikiLala</div>
+          <div class="brand-card-desc">Playful, colourful everyday wear for infants and young children. Loved for its vibrant designs and comfortable fits — a staple in Malaysian households.</div>
+          <div class="brand-card-links">
+            <a class="brand-shop-link shopee" href="https://shopee.com.my/kikilala.os" target="_blank">Shopee →</a>
+            <a class="brand-shop-link lazada" href="https://s.lazada.com.my/s.fkdNt" target="_blank">Lazada →</a>
           </div>
         </div>
-      </div>
-      <div class="contact-status">
-        <div class="status-dot"></div>
-        Available for freelance & full-time roles
+        <div class="brand-card">
+          <div class="brand-card-cat">Kids fashion</div>
+          <div class="brand-card-name">KIKO</div>
+          <div class="brand-card-desc">Stylish, comfortable clothing for kids who want to express themselves. A long-standing favourite in major Malaysian department stores across the country.</div>
+          <div class="brand-card-links">
+            <a class="brand-shop-link shopee" href="https://shopee.com.my/kikokids.os" target="_blank">Shopee →</a>
+            <a class="brand-shop-link lazada" href="https://s.lazada.com.my/s.5LgAx" target="_blank">Lazada →</a>
+          </div>
+        </div>
+        <div class="brand-card">
+          <div class="brand-card-cat">Infant & toddler</div>
+          <div class="brand-card-name">Cuddles</div>
+          <div class="brand-card-desc">Soft, gentle essentials designed for the earliest years. Trusted by parents for quality materials and safe construction from day one.</div>
+          <div class="brand-card-links">
+            <a class="brand-shop-link" style="border-color:var(--border);color:var(--muted)">Coming soon online</a>
+          </div>
+        </div>
+        <div class="brand-card">
+          <div class="brand-card-cat">Premium wear</div>
+          <div class="brand-card-name">Pronic</div>
+          <div class="brand-card-desc">Elevated everyday basics for families who value quality materials and refined design — at accessible price points for the modern Malaysian family.</div>
+          <div class="brand-card-links">
+            <a class="brand-shop-link shopee" href="https://shopee.com.my/pronic.os" target="_blank">Shopee →</a>
+            <a class="brand-shop-link lazada" href="https://s.lazada.com.my/s.fk0oM" target="_blank">Lazada →</a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="contact-right">
-      <div class="page-eyebrow" style="margin-bottom:2rem">// send a message</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input class="form-input" type="text" id="fname" placeholder="John Doe"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" id="femail" placeholder="you@company.com"/>
-        </div>
+    <div id="btab-licensing" style="display:none">
+      <div class="licensing-grid">
+        <div class="license-card"><div class="license-card-licensor">Cartoon Network</div><div class="license-card-name">PowerPuff Girls</div><div class="license-card-tag">Licensed character wear</div></div>
+        <div class="license-card"><div class="license-card-licensor">DreamWorks Animation</div><div class="license-card-name">DreamWorks</div><div class="license-card-tag">Licensed character wear</div></div>
+        <div class="license-card"><div class="license-card-licensor">Classic cartoon</div><div class="license-card-name">Garfield</div><div class="license-card-tag">Licensed character wear</div></div>
+        <div class="license-card"><div class="license-card-licensor">Nickelodeon</div><div class="license-card-name">Ninja Turtles</div><div class="license-card-tag">Licensed character wear</div></div>
+        <div class="license-card"><div class="license-card-licensor">Warner Bros.</div><div class="license-card-name">Tom & Jerry</div><div class="license-card-tag">Licensed character wear</div></div>
+        <div class="license-card"><div class="license-card-licensor">Nickelodeon</div><div class="license-card-name">Dora the Explorer</div><div class="license-card-tag">Licensed character wear</div></div>
+        <div class="license-card"><div class="license-card-licensor">Warner Bros.</div><div class="license-card-name">Baby Tom & Jerry</div><div class="license-card-tag">Licensed character wear</div></div>
+        <div class="license-card"><div class="license-card-licensor">Nickelodeon</div><div class="license-card-name">Blaze</div><div class="license-card-tag">Licensed character wear</div></div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Subject</label>
-        <select class="form-select" id="fsubject">
-          <option value="">Select inquiry type</option>
-          <option value="Freelance Project Inquiry">Freelance Project</option>
-          <option value="Job Opportunity">Job Opportunity</option>
-          <option value="Collaboration">Collaboration</option>
-          <option value="General Inquiry">General Inquiry</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Message</label>
-        <textarea class="form-textarea" id="fmessage" placeholder="Tell me about your project, timeline, and budget..."></textarea>
-      </div>
-      <button class="form-submit" onclick="sendEmail()">Send Message →</button>
-      <p class="form-note">This will open your email client with the message pre-filled.<br/>Your email is never stored or shared.</p>
-      <div class="success-msg" id="success-msg">✓ Opening your email client...</div>
     </div>
   </div>
+
+  <footer>
+    <div><div class="footer-logo">Teo Guan Lee</div><div class="footer-tagline">Dressing Malaysian families since 1934. Publicly listed on Bursa Malaysia.</div></div>
+    <div><div class="footer-col-title">Company</div><div class="footer-links"><a onclick="showPage('about')">About Us</a><a onclick="showPage('brands')">Our Brands</a><a onclick="showPage('investors')">Investors</a><a onclick="showPage('contact')">Contact</a></div></div>
+    <div><div class="footer-col-title">Investors</div><div class="footer-links"><a onclick="showPage('investors')">KLSE Announcements</a><a onclick="showPage('investors')">Annual Reports</a></div></div>
+    <div><div class="footer-col-title">Brands</div><div class="footer-links"><a onclick="showPage('brands')">KikiLala</a><a onclick="showPage('brands')">KIKO</a><a onclick="showPage('brands')">Cuddles</a><a onclick="showPage('brands')">Pronic</a></div></div>
+  </footer>
+  <div class="footer-bottom"><span>© <span class="yr"></span> Teo Guan Lee Corporation Berhad. All rights reserved.</span><div class="footer-bottom-right"><a>Privacy Policy</a><a>Terms of Use</a></div></div>
+</div>
+
+<!-- =====================================================
+     PAGE: INVESTORS
+     ===================================================== -->
+<div class="page" id="page-investors">
+  <div class="inv-hero">
+    <div>
+      <div class="section-eyebrow"><div class="section-eyebrow-line" style="background:var(--gold)"></div><div class="section-eyebrow-text" style="color:var(--gold)">Investor Relations</div></div>
+      <h1 class="section-title" style="color:var(--white)">Transparency you can count on</h1>
+      <p class="section-sub" style="color:rgba(255,255,255,0.55)">As a publicly listed company on Bursa Malaysia, TGL Corp maintains full corporate governance standards and regular market disclosures.</p>
+      <div class="stock-box">
+        <div class="stock-label">Listed on</div>
+        <div class="stock-ticker">TGL Corp <span class="stock-exchange">· Bursa Malaysia (KLSE)</span></div>
+      </div>
+    </div>
+    <div class="inv-hero-right">
+      <div class="inv-stat"><div class="inv-stat-num">1934</div><div class="inv-stat-label">Year founded</div></div>
+      <div class="inv-stat"><div class="inv-stat-num">KLSE</div><div class="inv-stat-label">Listed exchange</div></div>
+      <div class="inv-stat"><div class="inv-stat-num">12+</div><div class="inv-stat-label">Active brands</div></div>
+      <div class="inv-stat"><div class="inv-stat-num">2</div><div class="inv-stat-label">National offices</div></div>
+    </div>
+  </div>
+
+  <div class="inv-docs reveal">
+    <div class="section-eyebrow"><div class="section-eyebrow-line"></div><div class="section-eyebrow-text">Key documents</div></div>
+    <h2 class="section-title">Investor resources</h2>
+    <div class="inv-docs-grid">
+      <div class="inv-doc-card" onclick="window.open('https://www.bursamalaysia.com/market_information/announcements/company_announcement?cat=&sub_type=&company=9369&alph=&dt_ht=&sec=&subsec=&dt_lt=','_blank')"><div class="inv-doc-icon">📋</div><div class="inv-doc-title">KLSE Announcements</div><div class="inv-doc-desc">Bursa Malaysia regulatory disclosures, material announcements, and market notices.</div><div class="inv-doc-link">View announcements →</div></div>
+      <div class="inv-doc-card" onclick="window.open('https://www.klsescreener.com/v2/announcements/stock/9369?category=AR','_blank')"><div class="inv-doc-icon">📄</div><div class="inv-doc-title">Annual Reports</div><div class="inv-doc-desc">Full financial statements, AGM minutes, and management discussion and analysis.</div><div class="inv-doc-link">View reports →</div></div>
+      <div class="inv-doc-card" onclick="window.open('https://tglcorp.com.my/corporate','_blank')"><div class="inv-doc-icon">🏛️</div><div class="inv-doc-title">Board of Directors</div><div class="inv-doc-desc">Board composition, committee structure, director profiles, and fit & proper policy.</div><div class="inv-doc-link">View board →</div></div>
+    </div>
+  </div>
+
+  <div class="governance-strip reveal">
+    <div class="section-eyebrow"><div class="section-eyebrow-line"></div><div class="section-eyebrow-text">Corporate governance</div></div>
+    <h2 class="section-title">Governance policies</h2>
+    <div class="governance-grid">
+      <div class="gov-item"><div class="gov-item-title">Board Charter</div><div class="gov-item-desc">Roles, responsibilities and structure of the Board of Directors.</div></div>
+      <div class="gov-item"><div class="gov-item-title">Audit Committee</div><div class="gov-item-desc">Terms of reference and members of the Audit & Risk Committee.</div></div>
+      <div class="gov-item"><div class="gov-item-title">Remuneration Policy</div><div class="gov-item-desc">Framework for director and senior management remuneration.</div></div>
+      <div class="gov-item"><div class="gov-item-title">Code of Conduct</div><div class="gov-item-desc">Ethical standards expected of all employees and directors.</div></div>
+      <div class="gov-item"><div class="gov-item-title">Whistle Blowing Policy</div><div class="gov-item-desc">Channels for reporting misconduct safely and confidentially.</div></div>
+      <div class="gov-item"><div class="gov-item-title">Anti-Bribery & Corruption</div><div class="gov-item-desc">TGL Corp's zero-tolerance policy on bribery and corrupt practices.</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div><div class="footer-logo">Teo Guan Lee</div><div class="footer-tagline">Dressing Malaysian families since 1934. Publicly listed on Bursa Malaysia.</div></div>
+    <div><div class="footer-col-title">Company</div><div class="footer-links"><a onclick="showPage('about')">About Us</a><a onclick="showPage('brands')">Our Brands</a><a onclick="showPage('investors')">Investors</a><a onclick="showPage('contact')">Contact</a></div></div>
+    <div><div class="footer-col-title">Investors</div><div class="footer-links"><a onclick="showPage('investors')">KLSE Announcements</a><a onclick="showPage('investors')">Annual Reports</a><a onclick="showPage('investors')">Board Charter</a><a onclick="showPage('investors')">Governance</a></div></div>
+    <div><div class="footer-col-title">Brands</div><div class="footer-links"><a onclick="showPage('brands')">KikiLala</a><a onclick="showPage('brands')">KIKO</a><a onclick="showPage('brands')">Cuddles</a><a onclick="showPage('brands')">Pronic</a></div></div>
+  </footer>
+  <div class="footer-bottom"><span>© <span class="yr"></span> Teo Guan Lee Corporation Berhad. All rights reserved.</span><div class="footer-bottom-right"><a>Privacy Policy</a><a>Terms of Use</a></div></div>
+</div>
+
+<!-- =====================================================
+     PAGE: CONTACT
+     ===================================================== -->
+<div class="page" id="page-contact">
+  <div class="contact-hero">
+    <div class="section-eyebrow"><div class="section-eyebrow-line" style="background:var(--gold)"></div><div class="section-eyebrow-text" style="color:var(--gold)">Get in touch</div></div>
+    <h1 class="section-title" style="color:var(--white)">We'd love to hear from you</h1>
+    <p class="section-sub" style="color:rgba(255,255,255,0.55)">Wholesale enquiries, investor relations, career opportunities, or general correspondence — reach out to either of our offices.</p>
+  </div>
+
+  <div class="contact-body reveal">
+    <div>
+      <div class="section-eyebrow"><div class="section-eyebrow-line"></div><div class="section-eyebrow-text">Our offices</div></div>
+      <h2 class="section-title">Find us</h2>
+      <div class="office-cards">
+        <!-- OFFICE DETAILS — update address, phone, fax, email below -->
+        <div class="office-card">
+          <div class="office-card-name">Penang Office <span style="font-size:11px;color:var(--muted);font-family:var(--sans);font-weight:300">(Headquarters)</span></div>
+          <div class="office-row"><strong>Address</strong>Plot 28, Lorong Perusahaan Maju 4, Prai Industrial Estate, 13600 Perai, Penang</div>
+          <div class="office-row"><strong>Tel</strong>+604 507 6228</div>
+          <div class="office-row"><strong>Fax</strong>+604 507 9228</div>
+          <div class="office-row"><strong>Email</strong>enquiry@tglcorp.com.my</div>
+        </div>
+        <div class="office-card">
+          <div class="office-card-name">Kuala Lumpur Office</div>
+          <div class="office-row"><strong>Address</strong>No. 10-12, Jalan 6/91, Taman Shamelin Perkasa, Batu 3½, Cheras, 56100 Kuala Lumpur</div>
+          <div class="office-row"><strong>Tel</strong>+603 9283 1422</div>
+          <div class="office-row"><strong>Fax</strong>+603 9776 4682</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT FORM — the mailto address is set in the sendEmail() function below -->
+    <div>
+      <div class="contact-form">
+        <div class="form-title">Send us a message</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Your name</label><input class="form-input" id="cf-name" type="text" placeholder="Ahmad bin Ali"/></div>
+          <div class="form-group"><label class="form-label">Email address</label><input class="form-input" id="cf-email" type="email" placeholder="you@company.com"/></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Enquiry type</label>
+          <select class="form-select" id="cf-subject">
+            <option value="">Select type</option>
+            <option>Wholesale / Trade Enquiry</option>
+            <option>Investor Relations</option>
+            <option>Brand Licensing</option>
+            <option>Career Opportunities</option>
+            <option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" id="cf-msg" placeholder="Tell us how we can help..."></textarea></div>
+        <button class="form-submit" onclick="sendContactEmail()">Send Message</button>
+        <p class="form-note">This opens your email client with the message pre-filled. Your details are never stored.</p>
+        <div class="form-success" id="cf-success">✓ Opening your email client...</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div><div class="footer-logo">Teo Guan Lee</div><div class="footer-tagline">Dressing Malaysian families since 1934. Publicly listed on Bursa Malaysia.</div></div>
+    <div><div class="footer-col-title">Company</div><div class="footer-links"><a onclick="showPage('about')">About Us</a><a onclick="showPage('brands')">Our Brands</a><a onclick="showPage('investors')">Investors</a><a onclick="showPage('contact')">Contact</a></div></div>
+    <div><div class="footer-col-title">Investors</div><div class="footer-links"><a onclick="showPage('investors')">KLSE Announcements</a><a onclick="showPage('investors')">Annual Reports</a></div></div>
+    <div><div class="footer-col-title">Brands</div><div class="footer-links"><a onclick="showPage('brands')">KikiLala</a><a onclick="showPage('brands')">KIKO</a><a onclick="showPage('brands')">Cuddles</a><a onclick="showPage('brands')">Pronic</a></div></div>
+  </footer>
+  <div class="footer-bottom"><span>© <span class="yr"></span> Teo Guan Lee Corporation Berhad. All rights reserved.</span><div class="footer-bottom-right"><a>Privacy Policy</a><a>Terms of Use</a></div></div>
 </div>
 
 <script>
-function showPage(id, btn) {
+/* ── PAGE NAVIGATION ── */
+function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
+  const btns = document.querySelectorAll('.nav-links button');
+  const map = {home:0,about:1,brands:2,investors:3,contact:4};
+  if (map[id] !== undefined) btns[map[id]].classList.add('active');
+  window.scrollTo(0, 0);
+  triggerReveals();
+}
+
+/* ── MOBILE MENU ── */
+function toggleMobile() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMobile() {
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+/* ── BRAND TABS ── */
+function switchBrandTab(tab, btn) {
+  document.querySelectorAll('.brands-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  window.scrollTo(0,0);
+  document.getElementById('btab-home').style.display = tab === 'home' ? 'block' : 'none';
+  document.getElementById('btab-licensing').style.display = tab === 'licensing' ? 'block' : 'none';
 }
 
-function sendEmail() {
-  const name = document.getElementById('fname').value.trim();
-  const email = document.getElementById('femail').value.trim();
-  const subject = document.getElementById('fsubject').value || 'Portfolio Inquiry';
-  const message = document.getElementById('fmessage').value.trim();
-
-  if (!name || !email || !message) {
-    alert('Please fill in your name, email, and message.');
-    return;
-  }
-
-  const body = `Hi,\n\nName: ${name}\nEmail: ${email}\n\n${message}\n\n---\nSent from portfolio contact form.`;
-  // REPLACE: your.email@gmail.com below with your actual email
-  const mailto = `mailto:your.email@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-  window.location.href = mailto;
-
-  const msg = document.getElementById('success-msg');
-  msg.style.display = 'block';
-  setTimeout(() => { msg.style.display = 'none'; }, 4000);
+/* ── CONTACT FORM — update the email address below ── */
+function sendContactEmail() {
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const subject = document.getElementById('cf-subject').value || 'Website Enquiry';
+  const msg = document.getElementById('cf-msg').value.trim();
+  if (!name || !email || !msg) { alert('Please fill in your name, email, and message.'); return; }
+  const body = `Name: ${name}\nEmail: ${email}\n\n${msg}\n\n---\nSent from TGL Corp website.`;
+  /* ↓ REPLACE this email address with the real one ↓ */
+  window.location.href = `mailto:enquiry@tglcorp.com.my?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const s = document.getElementById('cf-success');
+  s.style.display = 'block';
+  setTimeout(() => s.style.display = 'none', 4000);
 }
+
+/* ── SCROLL REVEAL ── */
+function triggerReveals() {
+  setTimeout(() => {
+    document.querySelectorAll('.page.active .reveal').forEach(el => {
+      if (!el.classList.contains('visible')) el.classList.add('visible');
+    });
+  }, 80);
+}
+
+/* ── DYNAMIC YEAR in all footers ── */
+document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
+
+/* Initial reveal for home page */
+triggerReveals();
 </script>
 </body>
 </html>
