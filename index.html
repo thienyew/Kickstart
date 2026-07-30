@@ -747,16 +747,16 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     e.preventDefault();
 
     var name = form.elements['name'].value.trim();
-    var ctc  = form.contact.value.trim();
-    var msg  = form.message.value.trim();
+    var ctc  = form.elements['contact'].value.trim();
+    var msg  = form.elements['message'].value.trim();
 
     if(!name){ toast("Please add your name."); form.elements['name'].focus(); return; }
-    if(!ctc){ toast("Please add an email or phone number."); form.contact.focus(); return; }
-    if(!msg){ toast("Please tell us what you need."); form.message.focus(); return; }
-    if(!form.consent.checked){ toast("Please tick the consent box so we can reply."); form.consent.focus(); return; }
+    if(!ctc){ toast("Please add an email or phone number."); form.elements['contact'].focus(); return; }
+    if(!msg){ toast("Please tell us what you need."); form.elements['message'].focus(); return; }
+    if(!form.elements['consent'].checked){ toast("Please tick the consent box so we can reply."); form.elements['consent'].focus(); return; }
 
     /* honeypot: real users never fill this */
-    if(form.botcheck && form.botcheck.value){ return; }
+    if(form.elements['botcheck'] && form.elements['botcheck'].checked){ return; }
 
     busy(true);
 
@@ -780,10 +780,12 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
         form.reset();
         toast("Message sent. We will reply within 24 hours.");
       }else{
-        toast("That did not send. Please WhatsApp us instead.");
+        console.error("Web3Forms rejected:", data);
+        toast((data && data.message) ? data.message : "That did not send. Please WhatsApp us instead.");
       }
     })
-    .catch(function(){
+    .catch(function(err){
+      console.error("Web3Forms error:", err);
       toast("Network problem. Please WhatsApp us instead.");
     })
     .then(function(){ busy(false); });
