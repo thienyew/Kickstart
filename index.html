@@ -746,11 +746,11 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
   form.addEventListener("submit", function(e){
     e.preventDefault();
 
-    var name = form.name.value.trim();
+    var name = form.elements['name'].value.trim();
     var ctc  = form.contact.value.trim();
     var msg  = form.message.value.trim();
 
-    if(!name){ toast("Please add your name."); form.name.focus(); return; }
+    if(!name){ toast("Please add your name."); form.elements['name'].focus(); return; }
     if(!ctc){ toast("Please add an email or phone number."); form.contact.focus(); return; }
     if(!msg){ toast("Please tell us what you need."); form.message.focus(); return; }
     if(!form.consent.checked){ toast("Please tick the consent box so we can reply."); form.consent.focus(); return; }
