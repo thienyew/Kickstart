@@ -1,1055 +1,806 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Web Developer Malaysia — Corporate Websites, E-Commerce &amp; Data Dashboards</title>
-<meta name="description" content="Malaysian freelance web developer specialising in corporate websites, e-commerce systems, and data dashboards. Based in Petaling Jaya, Selangor."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoirTech — Web Development for Malaysian Business</title>
+<meta name="description" content="NoirTech builds corporate websites, e-commerce platforms and data dashboards for Malaysian businesses. Petaling Jaya, Selangor.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A0A0B'/%3E%3Cpath d='M30 28h11v44H30zM59 28h11v44H59zM30 28h11l29 44H59z' fill='%23EDEDED'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-img{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-button{cursor:pointer;border:none;background:none;font:inherit}
-ul{list-style:none}
-
+/* ============ TOKENS ============ */
 :root{
-  --black:#1D1D1F;
-  --white:#FFFFFF;
-  --gray-1:#F5F5F7;
-  --gray-2:#E8E8ED;
-  --gray-3:#D2D2D7;
-  --gray-4:#86868B;
-  --gray-5:#515154;
-  --indigo:#4F46E5;
-  --indigo-light:#EEF2FF;
-  --green:#059669;
-  --font:'Inter',system-ui,sans-serif;
-  --nav-h:52px;
-  --radius-sm:8px;
-  --radius:14px;
-  --radius-lg:20px;
-  --tr:0.22s cubic-bezier(0.4,0,0.2,1);
+  --bg:#0A0A0B;
+  --bg2:#111114;
+  --bg3:#18181C;
+  --line:rgba(255,255,255,.09);
+  --line2:rgba(255,255,255,.15);
+  --fg:#EDEDED;
+  --fg2:#A1A1AA;
+  --fg3:#71717A;
+  --green:#4ADE80;
+  --green-bg:rgba(74,222,128,.07);
+  --green-line:rgba(74,222,128,.28);
+  --live:#22C55E;
+  --hover:#D4D4D8;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --nav:60px;
+  --max:1120px;
+  --pad:clamp(20px,5vw,56px);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+html[data-theme="light"]{
+  --bg:#FFFFFF;
+  --bg2:#F7F7F8;
+  --bg3:#EFEFF1;
+  --line:rgba(0,0,0,.09);
+  --line2:rgba(0,0,0,.16);
+  --fg:#0A0A0B;
+  --fg2:#52525B;
+  --fg3:#71717A;
+  --green:#16A34A;
+  --green-bg:rgba(22,163,74,.07);
+  --green-line:rgba(22,163,74,.3);
+  --live:#16A34A;
+  --hover:#27272A;
 }
 
+/* ============ RESET ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:var(--nav)}
 body{
-  font-family:var(--font);
-  font-size:17px;
+  font-family:var(--sans);
+  font-size:16px;
   line-height:1.6;
-  color:var(--black);
-  background:var(--white);
+  color:var(--fg2);
+  background:var(--bg);
   overflow-x:hidden;
+  transition:background .3s ease,color .3s ease;
 }
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+ul{list-style:none}
+img,svg{display:block;max-width:100%}
+::selection{background:var(--fg);color:var(--bg)}
+:focus-visible{outline:2px solid var(--fg2);outline-offset:3px;border-radius:4px}
 
-/* NAV */
-nav{
+/* ============ LAYOUT ============ */
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+.sec{padding:clamp(64px,9vw,120px) 0;border-top:1px solid var(--line)}
+
+/* ============ TYPE ============ */
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3)}
+h1,h2,h3,h4{font-family:var(--sans);color:var(--fg);letter-spacing:-.03em;line-height:1.08;font-weight:600}
+.h2{font-size:clamp(26px,4vw,42px)}
+.h3{font-size:clamp(18px,2.2vw,22px);font-weight:600;line-height:1.25}
+.lead{font-size:clamp(15px,1.6vw,17px);line-height:1.72;color:var(--fg2)}
+
+/* ============ NAV ============ */
+.nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  height:var(--nav-h);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 5%;
-  background:rgba(255,255,255,0.82);
-  backdrop-filter:saturate(180%) blur(20px);
-  -webkit-backdrop-filter:saturate(180%) blur(20px);
-  border-bottom:1px solid var(--gray-2);
+  height:var(--nav);
+  background:var(--bg);
+  border-bottom:1px solid transparent;
+  transition:border-color .25s ease,background .3s ease;
 }
-.nav-logo{
-  font-size:15px;font-weight:600;letter-spacing:-0.01em;
-  color:var(--black);
-}
-.nav-links{
-  display:flex;align-items:center;gap:32px;
-}
-.nav-links a{
-  font-size:13px;color:var(--gray-5);
-  transition:color var(--tr);
-}
-.nav-links a:hover{color:var(--black)}
-.nav-cta{
-  font-size:13px;font-weight:500;
-  padding:7px 18px;
-  background:var(--black);color:var(--white);
-  border-radius:20px;
-  transition:background var(--tr),transform var(--tr);
-  display:inline-block;
-}
-.nav-cta:hover{background:#3a3a3c;transform:scale(1.02)}
-.nav-burger{
-  display:none;flex-direction:column;gap:5px;padding:4px;
-  background:none;border:none;cursor:pointer;
-}
-.nav-burger span{
-  width:22px;height:1.5px;background:var(--black);
-  border-radius:2px;transition:all 0.25s;display:block;
-}
-.mobile-menu{
-  display:none;
-  position:fixed;top:var(--nav-h);left:0;right:0;z-index:99;
-  background:rgba(255,255,255,0.97);
-  backdrop-filter:blur(20px);
-  padding:24px 5% 32px;
-  border-bottom:1px solid var(--gray-2);
-  flex-direction:column;
-}
-.mobile-menu.open{display:flex}
-.mobile-menu a{
-  font-size:17px;padding:14px 0;
-  border-bottom:1px solid var(--gray-2);
-  color:var(--black);display:block;
-}
-.mobile-menu a:last-of-type{border-bottom:none}
-.mobile-cta-wrap{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
-
-/* SECTIONS */
-section{padding:100px 5%}
-.section-inner{max-width:980px;margin:0 auto}
-
-/* HERO */
-#hero{
-  min-height:100vh;
-  display:flex;align-items:center;
-  padding-top:calc(var(--nav-h) + 60px);
-  padding-bottom:80px;
-  background:var(--white);
-}
-.hero-inner{
-  max-width:980px;margin:0 auto;width:100%;
-  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
-}
-.hero-eyebrow{
-  font-size:11px;font-weight:500;letter-spacing:0.12em;
-  color:var(--gray-4);text-transform:uppercase;
-  margin-bottom:20px;
-}
-.hero-h1{
-  font-size:clamp(40px,6vw,68px);
-  font-weight:600;line-height:1.06;
-  letter-spacing:-0.03em;
-  color:var(--black);
-  margin-bottom:24px;
-}
-.hero-h1 em{font-style:normal;color:var(--indigo)}
-.hero-sub{
-  font-size:17px;line-height:1.65;
-  color:var(--gray-5);
-  max-width:420px;margin-bottom:36px;
-}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-.btn-primary{
-  font-size:15px;font-weight:500;
-  padding:13px 26px;
-  background:var(--black);color:var(--white);
-  border-radius:24px;display:inline-block;
-  transition:background var(--tr),transform var(--tr);
-}
-.btn-primary:hover{background:#3a3a3c;transform:scale(1.02)}
-.btn-wa{
-  font-size:15px;font-weight:500;
-  padding:13px 26px;
-  background:#25D366;color:var(--white);
-  border-radius:24px;display:inline-block;
-  transition:background var(--tr),transform var(--tr);
-}
-.btn-wa:hover{background:#22c55e;transform:scale(1.02)}
-.btn-secondary{
-  font-size:15px;font-weight:500;
-  padding:13px 26px;
-  background:var(--white);color:var(--black);
-  border-radius:24px;display:inline-block;
-  border:1px solid var(--gray-3);
-  transition:border-color var(--tr),transform var(--tr);
-}
-.btn-secondary:hover{border-color:var(--black);transform:scale(1.02)}
-.hero-right{
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;
-}
-.hero-stat{
-  background:var(--gray-1);
-  border-radius:var(--radius);
-  padding:24px 20px;
-}
-.hero-stat-num{
-  font-size:32px;font-weight:600;letter-spacing:-0.03em;
-  color:var(--black);line-height:1;margin-bottom:6px;
-}
-.hero-stat-label{font-size:13px;color:var(--gray-4);line-height:1.4}
-.hero-stat.accent{background:var(--indigo-light)}
-.hero-stat.accent .hero-stat-num{color:var(--indigo)}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--white);border:1px solid var(--gray-2);
-  border-radius:20px;padding:6px 14px 6px 8px;
-  font-size:12px;color:var(--gray-5);
-}
-.hero-badge-dot{
-  width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;
-}
-.hero-badge-wrap{margin-top:16px}
-
-/* TRUST BAR */
-#trust{
-  padding:32px 5%;
-  background:var(--gray-1);
-  border-top:1px solid var(--gray-2);
-  border-bottom:1px solid var(--gray-2);
-}
-.trust-inner{
-  max-width:980px;margin:0 auto;
-  display:flex;align-items:center;gap:40px;flex-wrap:wrap;
-  justify-content:space-between;
-}
-.trust-label{font-size:12px;color:var(--gray-4);font-weight:500;letter-spacing:0.06em;text-transform:uppercase;flex-shrink:0}
-.trust-items{display:flex;gap:32px;flex-wrap:wrap;align-items:center}
-.trust-item{font-size:14px;font-weight:500;color:var(--gray-5)}
-.trust-item span{color:var(--indigo)}
-
-/* SECTION HEADER */
-.sec-eyebrow{
-  font-size:11px;font-weight:500;letter-spacing:0.12em;
-  color:var(--gray-4);text-transform:uppercase;margin-bottom:12px;
-}
-.sec-h2{
-  font-size:clamp(28px,4vw,42px);
-  font-weight:600;letter-spacing:-0.025em;line-height:1.1;
-  color:var(--black);margin-bottom:16px;
-}
-.sec-lead{
-  font-size:17px;color:var(--gray-5);
-  max-width:560px;line-height:1.65;margin-bottom:56px;
-}
-
-/* SERVICES */
-#services{background:var(--white)}
-.services-grid{
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;
-  border:1px solid var(--gray-2);border-radius:var(--radius-lg);
-  overflow:hidden;background:var(--gray-2);
-}
-.service-card{
-  background:var(--white);padding:36px 32px;
-  transition:background var(--tr);
-}
-.service-card:hover{background:var(--gray-1)}
-.service-num{
-  font-size:11px;font-weight:500;letter-spacing:0.1em;
-  color:var(--gray-4);margin-bottom:20px;
-}
-.service-icon{
-  width:44px;height:44px;border-radius:10px;
+.nav.stuck{border-bottom-color:var(--line)}
+.nav-in{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;letter-spacing:-.03em;color:var(--fg);flex-shrink:0}
+.logo-mark{width:20px;height:20px;border-radius:5px;flex-shrink:0}
+.links{display:flex;gap:30px;align-items:center}
+.links a{font-size:14px;color:var(--fg3);transition:color .2s;padding:6px 0;white-space:nowrap}
+.links a:hover,.links a.act{color:var(--fg)}
+.nav-r{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.iconbtn{
+  width:38px;height:38px;border-radius:9px;
+  border:1px solid var(--line2);
   display:flex;align-items:center;justify-content:center;
-  margin-bottom:20px;font-size:22px;
+  color:var(--fg3);
+  transition:color .2s,border-color .2s;
+  background:transparent;
 }
-.service-title{
-  font-size:19px;font-weight:600;letter-spacing:-0.015em;
-  color:var(--black);margin-bottom:10px;
-}
-.service-desc{font-size:14px;color:var(--gray-5);line-height:1.6;margin-bottom:24px}
-.service-price{font-size:15px;font-weight:600;color:var(--black);margin-bottom:4px}
-.service-price-note{font-size:12px;color:var(--gray-4)}
-.service-features{margin-top:20px;display:flex;flex-direction:column;gap:8px}
-.service-feature{
-  display:flex;align-items:flex-start;gap:8px;
-  font-size:13px;color:var(--gray-5);
-}
-.service-check{
-  flex-shrink:0;width:16px;height:16px;border-radius:50%;
-  background:var(--gray-1);display:flex;align-items:center;
-  justify-content:center;margin-top:1px;font-size:9px;
-}
-.service-card.featured{background:var(--black)}
-.service-card.featured:hover{background:#1a1a1f}
-.service-card.featured .service-num{color:#6E6E73}
-.service-card.featured .service-title{color:var(--white)}
-.service-card.featured .service-desc{color:#86868B}
-.service-card.featured .service-price{color:var(--white)}
-.service-card.featured .service-price-note{color:#6E6E73}
-.service-card.featured .service-feature{color:#86868B}
-.service-card.featured .service-check{background:#2a2a2e;color:#86868B}
-.service-badge{
-  display:inline-block;font-size:11px;font-weight:500;
-  padding:3px 10px;border-radius:10px;margin-bottom:16px;
-  background:var(--indigo);color:var(--white);
-}
+.iconbtn:hover{color:var(--fg);border-color:var(--fg3)}
+.iconbtn svg{width:16px;height:16px}
+#sun{display:none}
+#moon{display:block}
+html[data-theme="light"] #sun{display:block}
+html[data-theme="light"] #moon{display:none}
+.burger{display:none;flex-direction:column;gap:4px}
+.burger b{display:block;width:15px;height:1.6px;background:currentColor;border-radius:2px;transition:transform .25s var(--ease),opacity .2s}
+.burger.on b:nth-child(1){transform:translateY(5.6px) rotate(45deg)}
+.burger.on b:nth-child(2){opacity:0}
+.burger.on b:nth-child(3){transform:translateY(-5.6px) rotate(-45deg)}
 
-/* PORTFOLIO */
-#portfolio{background:var(--gray-1)}
-.portfolio-grid{display:flex;flex-direction:column;gap:16px}
-.portfolio-card{
-  background:var(--white);border-radius:var(--radius-lg);overflow:hidden;
-  display:grid;grid-template-columns:1fr 1fr;
-  border:1px solid var(--gray-2);
-  transition:box-shadow var(--tr);
+/* mobile menu — kept off-screen, never display:none inside a risky rule */
+.menu{
+  position:fixed;left:0;right:0;top:var(--nav);z-index:99;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+  padding:6px var(--pad) 22px;
+  transform:translateY(-120%);
+  visibility:hidden;
+  transition:transform .38s var(--ease),visibility .38s;
 }
-.portfolio-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.08)}
-.portfolio-card.reverse{direction:rtl}
-.portfolio-card.reverse > *{direction:ltr}
-.portfolio-visual{
-  min-height:300px;display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;padding:32px;
-}
-.portfolio-visual.tgl{background:linear-gradient(135deg,#1a3a5c 0%,#0f2240 100%)}
-.portfolio-visual.solar{background:linear-gradient(135deg,#1a3a1a 0%,#0f2a0f 100%)}
-.portfolio-mock{width:240px;position:relative}
-.mock-browser{
-  background:rgba(255,255,255,0.08);border-radius:8px;padding:10px;
-  border:1px solid rgba(255,255,255,0.12);
-}
-.mock-nav{
-  height:22px;background:rgba(255,255,255,0.06);border-radius:4px;margin-bottom:8px;
-  display:flex;align-items:center;padding:0 8px;gap:8px;
-}
-.mock-nav-dot{height:4px;border-radius:2px;background:rgba(255,255,255,0.25)}
-.mock-hero-block{
-  height:60px;border-radius:4px;background:rgba(255,255,255,0.05);
-  display:flex;align-items:center;padding:0 10px;margin-bottom:6px;
-}
-.mock-row{height:10px;border-radius:3px;background:rgba(255,255,255,0.12);margin:6px 0}
-.mock-row.short{width:60%}
-.mock-row.wide{width:90%}
-.mock-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:6px}
-.mock-card{height:32px;border-radius:3px;background:rgba(255,255,255,0.07)}
-.mock-badge{
-  position:absolute;top:-8px;right:-8px;
-  font-size:10px;font-weight:600;padding:4px 10px;
-  border-radius:10px;color:#fff;white-space:nowrap;
-}
-.portfolio-content{
-  padding:40px;display:flex;flex-direction:column;justify-content:center;
-}
-.portfolio-tag{
-  font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--gray-4);margin-bottom:14px;
-}
-.portfolio-title{
-  font-size:22px;font-weight:600;letter-spacing:-0.02em;
-  color:var(--black);margin-bottom:12px;
-}
-.portfolio-desc{font-size:14px;color:var(--gray-5);line-height:1.65;margin-bottom:24px}
-.portfolio-tech{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.tech-pill{
-  font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;
-  background:var(--gray-1);color:var(--gray-5);border:1px solid var(--gray-2);
-}
-.portfolio-stat-row{
-  display:flex;gap:24px;padding-top:20px;border-top:1px solid var(--gray-2);
-}
-.portfolio-stat-item{display:flex;flex-direction:column;gap:2px}
-.portfolio-stat-val{font-size:18px;font-weight:600;color:var(--black)}
-.portfolio-stat-key{font-size:12px;color:var(--gray-4)}
+.menu.on{transform:translateY(0);visibility:visible}
+.menu a{display:block;padding:15px 0;border-bottom:1px solid var(--line);font-size:17px;color:var(--fg)}
+.menu a:last-child{border-bottom:0}
 
-/* WHY ME */
-#why{background:var(--white)}
-.why-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
-  background:var(--gray-2);border-radius:var(--radius-lg);overflow:hidden;
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-size:15px;font-weight:500;
+  padding:12px 22px;min-height:46px;
+  border-radius:9px;
+  transition:background .2s,border-color .2s,color .2s,transform .25s var(--ease);
+  white-space:nowrap;cursor:pointer;
 }
-.why-card{
-  background:var(--white);padding:32px 28px;transition:background var(--tr);
-}
-.why-card:hover{background:var(--gray-1)}
-.why-icon{font-size:26px;margin-bottom:16px}
-.why-title{font-size:16px;font-weight:600;color:var(--black);margin-bottom:8px}
-.why-desc{font-size:14px;color:var(--gray-5);line-height:1.6}
+.btn:hover{transform:translateY(-1px)}
+.b-solid{background:var(--fg);color:var(--bg);border:1px solid var(--fg)}
+.b-solid:hover{background:var(--hover);border-color:var(--hover)}
+.b-line{background:transparent;color:var(--fg2);border:1px solid var(--line2)}
+.b-line:hover{color:var(--fg);border-color:var(--fg3)}
+.b-wa{background:var(--green-bg);color:var(--green);border:1px solid var(--green-line)}
+.b-wa:hover{border-color:var(--green)}
 
-/* ABOUT */
-#about{background:var(--black)}
-.about-inner{
-  max-width:980px;margin:0 auto;
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;
-}
-.about-left .sec-eyebrow{color:#6E6E73}
-.about-left .sec-h2{color:var(--white)}
-.about-body{font-size:17px;color:#86868B;line-height:1.7;margin-bottom:32px}
-.about-body strong{color:var(--white);font-weight:500}
+/* ============ HERO ============ */
+#hero{padding-top:calc(var(--nav) + clamp(48px,9vw,88px));padding-bottom:clamp(56px,8vw,96px)}
+.hero-eyebrow{margin-bottom:clamp(20px,3vw,28px)}
 
-.tools-section{margin-top:40px}
-.tools-label{
-  font-size:13px;color:#6E6E73;margin-bottom:14px;
-  font-weight:500;text-transform:uppercase;letter-spacing:0.08em;
+/* brand-forward headline */
+.hero-brand{
+  display:flex;align-items:center;gap:clamp(10px,2vw,16px);
+  margin-bottom:clamp(6px,1.4vw,12px);
 }
-.tools-wrap{display:flex;flex-wrap:wrap;gap:8px}
-.tool-pill{
-  font-size:13px;padding:5px 14px;border-radius:20px;
-  border:1px solid #2a2a2e;color:#86868B;
-  transition:border-color var(--tr),color var(--tr);
+.hero-brand-mark{
+  width:clamp(38px,7vw,62px);
+  height:clamp(38px,7vw,62px);
+  border-radius:clamp(9px,1.8vw,15px);
+  flex-shrink:0;
 }
-.tool-pill:hover{border-color:var(--indigo);color:var(--indigo)}
-.about-card{
-  background:linear-gradient(160deg,#1c1c1e 0%,#111 100%);
-  border-radius:var(--radius-lg);padding:32px;
-  border:1px solid #2a2a2e;
+.hero-name{
+  font-size:clamp(44px,10vw,104px);
+  font-weight:700;
+  letter-spacing:-.055em;
+  line-height:.92;
+  color:var(--fg);
 }
-.about-card-label{
-  font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
-  color:#6E6E73;margin-bottom:20px;
+.hero-tail{
+  font-size:clamp(23px,4.6vw,44px);
+  font-weight:600;
+  letter-spacing:-.032em;
+  line-height:1.14;
+  color:var(--fg3);
+  max-width:19ch;
+  margin-bottom:clamp(22px,3.4vw,30px);
 }
-.about-cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#2a2a2e;border-radius:10px;overflow:hidden}
-.about-cap{background:#1c1c1e;padding:20px 18px}
-.about-cap-title{font-size:14px;font-weight:500;color:var(--white);margin-bottom:6px}
-.about-cap-desc{font-size:13px;color:#6E6E73;line-height:1.55}
+.hero-tail b{color:var(--fg);font-weight:600}
+.hero-lead{max-width:50ch;margin-bottom:clamp(26px,4vw,36px)}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:clamp(24px,3.6vw,32px)}
+.live{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg3)}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--live);flex-shrink:0;animation:beat 2.6s infinite}
+@keyframes beat{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
 
-/* CONTACT */
-#contact{background:var(--white)}
-.contact-inner{
-  max-width:980px;margin:0 auto;
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;
+.facts{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  margin-top:clamp(40px,6vw,64px);
 }
-.contact-left .sec-lead{margin-bottom:32px}
-.contact-detail{display:flex;flex-direction:column;gap:16px;margin-top:8px}
-.contact-item{
+.fact{background:var(--bg);padding:20px 18px}
+.fact-k{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--fg3);margin-bottom:7px}
+.fact-v{font-size:15px;font-weight:500;color:var(--fg);letter-spacing:-.01em;line-height:1.35}
+
+/* ============ TICKER ============ */
+.tick{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;overflow:hidden}
+.tick-t{display:flex;width:max-content;animation:roll 42s linear infinite}
+.tick:hover .tick-t{animation-play-state:paused}
+@keyframes roll{to{transform:translateX(-50%)}}
+.tick-i{display:flex;align-items:center;gap:44px;padding-right:44px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);white-space:nowrap}
+.tick-i::after{content:'';width:3px;height:3px;border-radius:50%;background:var(--fg3);opacity:.45;flex-shrink:0}
+
+/* ============ SECTION HEAD ============ */
+.shead{margin-bottom:clamp(36px,5vw,58px);max-width:640px}
+.shead .mono{margin-bottom:14px}
+.shead h2{margin-bottom:14px}
+
+/* ============ ABOUT ============ */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:start}
+.about-txt p{margin-bottom:16px}
+.about-txt p:last-child{margin-bottom:0}
+.about-txt strong{color:var(--fg);font-weight:500}
+.rows{margin-top:26px;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:112px 1fr;gap:16px;padding:17px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.row-k{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--fg3)}
+.row-v{font-size:14.5px;line-height:1.62}
+.row-v b{color:var(--fg);font-weight:500}
+
+/* ============ SERVICES (clickable) ============ */
+.svcs{border-top:1px solid var(--line)}
+.svc{
+  display:grid;grid-template-columns:78px 1fr 1fr;
+  gap:clamp(14px,3vw,44px);align-items:start;
+  padding:clamp(26px,3.6vw,42px) var(--pad);
+  margin-left:calc(var(--pad) * -1);
+  margin-right:calc(var(--pad) * -1);
+  border-bottom:1px solid var(--line);
+  color:inherit;
+  transition:background .22s ease;
+  position:relative;
+}
+.svc:hover{background:var(--bg2)}
+.svc:hover .svc-go{color:var(--fg);transform:translateX(4px)}
+.svc:hover .svc-h{color:var(--fg)}
+.svc-n{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--fg3);padding-top:5px}
+.svc-h{margin-bottom:11px;transition:color .22s;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.svc-p{font-size:14.5px;line-height:1.68;margin-bottom:15px}
+.svc-go{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fg3);transition:color .22s,transform .28s var(--ease);
+}
+.svc-l{display:flex;flex-direction:column;gap:10px;padding-top:4px}
+.svc-li{display:grid;grid-template-columns:15px 1fr;gap:10px;align-items:start;font-size:14px;line-height:1.58}
+.svc-li svg{margin-top:4px;color:var(--fg3);flex-shrink:0}
+
+/* ============ PROCESS ============ */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.step{background:var(--bg2);padding:26px 22px;transition:background .22s}
+.step:hover{background:var(--bg3)}
+.step-n{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--fg3);margin-bottom:20px}
+.step h4{font-size:16.5px;margin-bottom:9px;letter-spacing:-.022em}
+.step p{font-size:13.5px;line-height:1.62}
+
+/* ============ CONTACT ============ */
+.ctc{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:start}
+.ctc-l .lead{margin-bottom:30px;max-width:42ch}
+.dbtns{display:flex;flex-direction:column;gap:10px;max-width:400px}
+.dbtn{
   display:flex;align-items:center;gap:14px;
-  font-size:15px;color:var(--gray-5);
+  padding:15px 17px;border-radius:11px;
+  border:1px solid var(--line2);background:var(--bg2);
+  transition:border-color .2s,background .2s,transform .25s var(--ease);
+  cursor:pointer;text-align:left;width:100%;
 }
-.contact-icon{
-  width:36px;height:36px;border-radius:8px;
-  background:var(--gray-1);display:flex;align-items:center;
-  justify-content:center;font-size:16px;flex-shrink:0;
-}
-.wa-big{
-  display:flex;align-items:center;gap:12px;
-  padding:16px 20px;border-radius:var(--radius);
-  background:#F0FDF4;border:1px solid #BBF7D0;
-  margin-top:8px;transition:background var(--tr);
-  cursor:pointer;
-}
-.wa-big:hover{background:#DCFCE7}
-.wa-big-icon{font-size:24px}
-.wa-big-text{flex:1}
-.wa-big-title{font-size:15px;font-weight:500;color:#166534}
-.wa-big-sub{font-size:13px;color:#4ADE80;margin-top:1px}
-.wa-big-arr{font-size:18px;color:#22C55E}
-.contact-form{display:flex;flex-direction:column;gap:16px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-group{display:flex;flex-direction:column;gap:6px}
-.form-label{font-size:13px;font-weight:500;color:var(--black)}
-.form-input,.form-select,.form-textarea{
-  font-family:var(--font);font-size:15px;
-  padding:12px 16px;border:1px solid var(--gray-2);
-  border-radius:var(--radius-sm);background:var(--white);color:var(--black);
-  transition:border-color var(--tr),box-shadow var(--tr);
-  outline:none;width:100%;
-}
-.form-input:focus,.form-select:focus,.form-textarea:focus{
-  border-color:var(--indigo);box-shadow:0 0 0 3px rgba(79,70,229,0.1);
-}
-.form-textarea{resize:vertical;min-height:100px;line-height:1.5}
-.form-submit{
-  font-family:var(--font);font-size:15px;font-weight:500;
-  padding:14px 24px;background:var(--black);color:var(--white);
-  border-radius:24px;transition:background var(--tr),transform var(--tr);
-  cursor:pointer;border:none;
-}
-.form-submit:hover{background:#3a3a3c;transform:scale(1.01)}
-.form-note{font-size:12px;color:var(--gray-4);margin-top:-4px}
+.dbtn:hover{border-color:var(--fg3);background:var(--bg3);transform:translateX(3px)}
+.dbtn-i{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--line);background:var(--bg3);color:var(--fg3)}
+.dbtn-t{flex:1;min-width:0}
+.dbtn-t b{display:block;font-size:14.5px;font-weight:500;color:var(--fg);letter-spacing:-.012em}
+.dbtn-t span{display:block;font-family:var(--mono);font-size:11.5px;color:var(--fg3);margin-top:3px;word-break:break-all}
+.dbtn-a{color:var(--fg3);transition:transform .28s var(--ease),color .2s;flex-shrink:0}
+.dbtn:hover .dbtn-a{transform:translateX(3px);color:var(--fg)}
 
-/* FOOTER */
-footer{
-  background:var(--gray-1);border-top:1px solid var(--gray-2);padding:32px 5%;
+.card{border:1px solid var(--line2);border-radius:13px;background:var(--bg2);padding:clamp(22px,3.2vw,30px)}
+.card-h{font-size:17.5px;font-weight:600;color:var(--fg);letter-spacing:-.025em;margin-bottom:6px}
+.card-s{font-size:13.5px;color:var(--fg3);margin-bottom:22px}
+.f{display:flex;flex-direction:column;gap:14px}
+.fl{display:flex;flex-direction:column;gap:7px}
+.fl label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3)}
+.fl input,.fl textarea{
+  font-family:var(--sans);font-size:16px;
+  padding:12px 14px;border-radius:9px;
+  background:var(--bg);color:var(--fg);
+  border:1px solid var(--line2);outline:none;width:100%;
+  transition:border-color .2s;
 }
-.footer-inner{
-  max-width:980px;margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+.fl input::placeholder,.fl textarea::placeholder{color:var(--fg3)}
+.fl input:focus,.fl textarea:focus{border-color:var(--fg3)}
+.fl textarea{resize:vertical;min-height:94px;line-height:1.6}
+.cons{display:grid;grid-template-columns:18px 1fr;gap:11px;align-items:start}
+.cons input{
+  appearance:none;-webkit-appearance:none;
+  width:18px;height:18px;margin-top:1px;flex-shrink:0;
+  border:1px solid var(--line2);border-radius:5px;background:var(--bg);
+  cursor:pointer;position:relative;transition:background .2s,border-color .2s;
 }
-.footer-left{font-size:13px;color:var(--gray-4)}
-.footer-left strong{color:var(--black);font-weight:500}
-.footer-links{display:flex;gap:24px}
-.footer-links a{font-size:13px;color:var(--gray-4);transition:color var(--tr)}
-.footer-links a:hover{color:var(--black)}
-
-/* REVEAL ANIMATIONS */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.visible{opacity:1;transform:none}
-.reveal-delay-1{transition-delay:0.1s}
-.reveal-delay-2{transition-delay:0.2s}
-.reveal-delay-3{transition-delay:0.3s}
-
-/* TOAST */
-.toast{
-  position:fixed;bottom:24px;right:24px;z-index:999;
-  background:var(--black);color:var(--white);
-  font-size:14px;padding:12px 20px;border-radius:20px;
-  opacity:0;transform:translateY(10px);
-  transition:all 0.3s;pointer-events:none;
+.cons input:checked{background:var(--fg);border-color:var(--fg)}
+.cons input:checked::after{content:'';position:absolute;left:5.5px;top:2px;width:4px;height:9px;border:solid var(--bg);border-width:0 2px 2px 0;transform:rotate(42deg)}
+.cons label{font-size:12.5px;line-height:1.6;color:var(--fg3);cursor:pointer}
+.send{
+  margin-top:4px;width:100%;
+  font-size:15px;font-weight:500;
+  padding:14px 22px;min-height:48px;border-radius:9px;
+  background:var(--fg);color:var(--bg);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:background .2s,opacity .2s;
 }
-.toast.show{opacity:1;transform:none}
+.send:hover{background:var(--hover)}
+.send:disabled{opacity:.5;cursor:not-allowed}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  .hero-inner{grid-template-columns:1fr;gap:48px}
-  .hero-right{grid-template-columns:repeat(4,1fr)}
-  .services-grid{grid-template-columns:1fr}
-  .portfolio-card{grid-template-columns:1fr}
-  .portfolio-card.reverse{direction:ltr}
-  .portfolio-visual{min-height:220px}
-  .portfolio-content{padding:28px}
-  .why-grid{grid-template-columns:1fr 1fr}
-  .about-inner{grid-template-columns:1fr;gap:48px}
-  .contact-inner{grid-template-columns:1fr;gap:48px}
-  .nav-links{display:none}
-  .nav-cta{display:none}
-  .nav-burger{display:flex}
-  section{padding:72px 5%}
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--line);padding:34px 0 40px}
+.foot{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.foot-b{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;letter-spacing:-.03em;color:var(--fg);margin-bottom:9px}
+.foot p{font-size:12.5px;line-height:1.7;color:var(--fg3)}
+.foot nav{display:flex;gap:22px;flex-wrap:wrap}
+.foot nav a{font-size:13.5px;color:var(--fg3);transition:color .2s}
+.foot nav a:hover{color:var(--fg)}
+
+/* ============ TOAST ============ */
+#toast{
+  position:fixed;left:50%;bottom:22px;z-index:200;
+  transform:translate(-50%,14px);opacity:0;pointer-events:none;
+  background:var(--bg3);border:1px solid var(--line2);color:var(--fg);
+  font-size:14px;padding:12px 20px;border-radius:10px;
+  max-width:calc(100vw - 32px);text-align:center;
+  box-shadow:0 10px 34px rgba(0,0,0,.4);
+  transition:opacity .3s,transform .3s var(--ease);
+}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ============ REVEAL ============ */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.dl1{transition-delay:.07s}.dl2{transition-delay:.14s}.dl3{transition-delay:.21s}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:920px){
+  .links{display:none}
+  .burger{display:flex}
+  .about,.ctc{grid-template-columns:1fr;gap:34px}
+  .steps{grid-template-columns:1fr 1fr}
+  .facts{grid-template-columns:1fr 1fr}
+  .svc{grid-template-columns:60px 1fr;gap:14px 18px}
+  .svc-l{grid-column:2/-1}
 }
 @media(max-width:600px){
-  .hero-right{grid-template-columns:1fr 1fr}
-  .why-grid{grid-template-columns:1fr}
-  .trust-inner{flex-direction:column;align-items:flex-start;gap:16px}
-  .form-row{grid-template-columns:1fr}
-  .portfolio-stat-row{flex-wrap:wrap;gap:16px}
-  .footer-inner{flex-direction:column;align-items:flex-start}
+  .steps,.facts{grid-template-columns:1fr}
+  .svc{grid-template-columns:1fr;gap:12px}
+  .svc-l{grid-column:1}
+  .svc-n{padding-top:0}
+  .row{grid-template-columns:1fr;gap:4px}
+  .hero-btns .btn{flex:1 1 100%}
+  .foot{flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){
-  .reveal{opacity:1;transform:none;transition:none}
-  *{transition-duration:0.01ms!important}
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .tick-t{animation:none}
+  .live i{animation:none}
+  *{transition-duration:.01ms !important}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav role="navigation" aria-label="Main navigation">
-  <a class="nav-logo" href="#hero">WebDev.my</a>
-  <div class="nav-links">
-    <a href="#services">Services</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <a class="nav-cta" href="#contact">Get a Quote</a>
-  <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#hero" aria-label="NoirTech home">
+      <svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <rect width="100" height="100" rx="22" fill="var(--fg)"/>
+        <path d="M30 28h11v44H30zM59 28h11v44H59zM30 28h11l29 44H59z" fill="var(--bg)"/>
+      </svg>
+      NoirTech
+    </a>
 
-<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile menu">
-  <a href="#services" class="mobile-link">Services</a>
-  <a href="#portfolio" class="mobile-link">Portfolio</a>
-  <a href="#about" class="mobile-link">About</a>
-  <a href="#contact" class="mobile-link">Contact</a>
-  <div class="mobile-cta-wrap">
-    <a class="btn-primary" href="#contact">Get a Quote</a>
-    <a class="btn-wa" href="https://wa.me/60124063717?text=Hello%2C%20I%20came%20across%20your%20portfolio%20and%20I%27m%20interested%20in%20discussing%20a%20web%20development%20project%20for%20my%20business.%20Could%20we%20arrange%20a%20time%20to%20speak%3F" target="_blank" rel="noopener">WhatsApp</a>
+    <nav class="links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="projects.html">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-r">
+      <button class="iconbtn" id="themeBtn" type="button" aria-label="Switch between dark and light mode">
+        <svg id="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v2M12 20.5v2M3.8 3.8l1.4 1.4M18.8 18.8l1.4 1.4M1.5 12h2M20.5 12h2M3.8 20.2l1.4-1.4M18.8 5.2l1.4-1.4"/></svg>
+        <svg id="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+      <button class="iconbtn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+        <b></b><b></b><b></b>
+      </button>
+    </div>
   </div>
+</header>
+
+<div class="menu" id="menu">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#process">Process</a>
+  <a href="projects.html">Work</a>
+  <a href="#contact">Contact</a>
 </div>
 
-<!-- HERO -->
+<main>
+
+<!-- ============ HERO ============ -->
 <section id="hero">
-  <div class="hero-inner">
-    <div>
-      <p class="hero-eyebrow">Freelance Web Developer &middot; Petaling Jaya, Selangor</p>
-      <h1 class="hero-h1">Web that works for your <em>business.</em></h1>
-      <p class="hero-sub">Corporate websites, e-commerce systems, and data dashboards &mdash; built for Malaysian SMEs that need real results, not just a pretty page.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="#services">See Services</a>
-        <a class="btn-wa" href="https://wa.me/60124063717?text=Hello%2C%20I%20came%20across%20your%20portfolio%20and%20I%27m%20interested%20in%20discussing%20a%20web%20development%20project%20for%20my%20business.%20Could%20we%20arrange%20a%20time%20to%20speak%3F" target="_blank" rel="noopener">WhatsApp Me</a>
-      </div>
-      <div class="hero-badge-wrap">
-        <span class="hero-badge"><span class="hero-badge-dot"></span>Available for new projects</span>
-      </div>
+  <div class="wrap">
+    <p class="mono hero-eyebrow rv">Petaling Jaya, Selangor &middot; Malaysia</p>
+
+    <div class="hero-brand rv dl1">
+      <svg class="hero-brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <rect width="100" height="100" rx="22" fill="var(--fg)"/>
+        <path d="M30 28h11v44H30zM59 28h11v44H59zM30 28h11l29 44H59z" fill="var(--bg)"/>
+      </svg>
+      <h1 class="hero-name">NoirTech</h1>
     </div>
-    <div class="hero-right">
-      <div class="hero-stat accent">
-        <div class="hero-stat-num">2</div>
-        <div class="hero-stat-label">Client projects delivered</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">Bursa</div>
-        <div class="hero-stat-label">Listed company as a client</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">3</div>
-        <div class="hero-stat-label">Specialised services</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">100%</div>
-        <div class="hero-stat-label">Local &mdash; I get Malaysian business</div>
-      </div>
+
+    <p class="hero-tail rv dl1">We build the systems your <b>business runs on.</b></p>
+
+    <p class="lead hero-lead rv dl2">Corporate websites, e-commerce platforms with real Malaysian payment processing, and reporting dashboards that turn scattered spreadsheets into decisions. Properly engineered, sensibly priced, delivered on time.</p>
+
+    <div class="hero-btns rv dl2">
+      <a class="btn b-solid" href="#contact">Get a quote</a>
+      <a class="btn b-wa" id="waHero" href="#" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.42Z"/></svg>
+        WhatsApp
+      </a>
+      <a class="btn b-line" href="#services">View services</a>
+    </div>
+
+    <p class="live rv dl3"><i aria-hidden="true"></i>Available for new projects</p>
+
+    <div class="facts rv dl3">
+      <div class="fact"><div class="fact-k">Based in</div><div class="fact-v">Selangor, Malaysia</div></div>
+      <div class="fact"><div class="fact-k">Services</div><div class="fact-v">Web &middot; Commerce &middot; Data</div></div>
+      <div class="fact"><div class="fact-k">Notable client</div><div class="fact-v">Bursa-listed group</div></div>
+      <div class="fact"><div class="fact-k">Response time</div><div class="fact-v">Within 24 hours</div></div>
     </div>
   </div>
 </section>
 
-<!-- TRUST BAR -->
-<div id="trust">
-  <div class="trust-inner">
-    <span class="trust-label">Trusted by</span>
-    <div class="trust-items">
-      <span class="trust-item">Teo Guan Lee Corporation Bhd <span>&middot; Bursa Malaysia</span></span>
-      <span class="trust-item">HitPay <span>&middot; Payment Gateway</span></span>
-      <span class="trust-item">Supabase <span>&middot; Database</span></span>
-      <span class="trust-item">Power BI <span>&middot; Microsoft</span></span>
-    </div>
+<!-- ============ TICKER ============ -->
+<div class="tick" aria-hidden="true">
+  <div class="tick-t">
+    <span class="tick-i">HTML &amp; CSS</span><span class="tick-i">JavaScript</span><span class="tick-i">Supabase</span><span class="tick-i">HitPay</span><span class="tick-i">FPX</span><span class="tick-i">Touch &lsquo;n Go</span><span class="tick-i">GrabPay</span><span class="tick-i">Power BI</span><span class="tick-i">Power Query</span><span class="tick-i">Excel Automation</span><span class="tick-i">PDPA Compliant</span>
+    <span class="tick-i">HTML &amp; CSS</span><span class="tick-i">JavaScript</span><span class="tick-i">Supabase</span><span class="tick-i">HitPay</span><span class="tick-i">FPX</span><span class="tick-i">Touch &lsquo;n Go</span><span class="tick-i">GrabPay</span><span class="tick-i">Power BI</span><span class="tick-i">Power Query</span><span class="tick-i">Excel Automation</span><span class="tick-i">PDPA Compliant</span>
   </div>
 </div>
 
-<!-- SERVICES -->
-<section id="services">
-  <div class="section-inner">
-    <p class="sec-eyebrow reveal">What I Build</p>
-    <h2 class="sec-h2 reveal reveal-delay-1">Three services.<br>One reliable developer.</h2>
-    <p class="sec-lead reveal reveal-delay-2">I keep my focus narrow so I can go deep. Every project gets my full attention &mdash; no junior handoffs, no outsourcing.</p>
-
-    <div class="services-grid reveal">
-      <div class="service-card">
-        <p class="service-num">01</p>
-        <div class="service-icon" style="background:#EEF2FF"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 17V13M12 17V9M16 17V11"/></svg></div>
-        <h3 class="service-title">Data &amp; Dashboard Services</h3>
-        <p class="service-desc">Turn your messy spreadsheets and scattered reports into clean, interactive dashboards your team can actually use.</p>
-        <div class="service-price">RM 500 &ndash; 2,000</div>
-        <div class="service-price-note">Per project &middot; One-time fee</div>
-        <ul class="service-features">
-          <li class="service-feature"><span class="service-check">&#x2713;</span>Power BI interactive dashboards</li>
-          <li class="service-feature"><span class="service-check">&#x2713;</span>Power Query data consolidation</li>
-          <li class="service-feature"><span class="service-check">&#x2713;</span>Excel automation &amp; reporting</li>
-          <li class="service-feature"><span class="service-check">&#x2713;</span>Ideal for SMEs with reporting headaches</li>
-        </ul>
-      </div>
-
-      <div class="service-card">
-        <p class="service-num">02</p>
-        <div class="service-icon" style="background:#F0FFF4"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <h3 class="service-title">Corporate &amp; Brochure Website</h3>
-        <p class="service-desc">A professional 5-page website that builds credibility with clients, investors, and partners &mdash; like the TGL Corp site I built.</p>
-        <div class="service-price">RM 1,500 &ndash; 2,500</div>
-        <div class="service-price-note">One-time build fee &middot; No recurring charges</div>
-        <ul class="service-features">
-          <li class="service-feature"><span class="service-check">&#x2713;</span>5 fully designed pages</li>
-          <li class="service-feature"><span class="service-check">&#x2713;</span>Mobile-first, fast-loading</li>
-          <li class="service-feature"><span class="service-check">&#x2713;</span>Contact form integration</li>
-          <li class="service-feature"><span class="service-check">&#x2713;</span>SEO-ready structure</li>
-        </ul>
-      </div>
-
-      <div class="service-card featured">
-        <div class="service-badge">Most Requested</div>
-        <p class="service-num">03</p>
-        <div class="service-icon" style="background:#1e1e2e"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
-        <h3 class="service-title">E-Commerce + Payment System</h3>
-        <p class="service-desc">A complete online store built to Malaysian payment standards &mdash; FPX, TnG, GrabPay, credit cards. PDPA compliant from day one.</p>
-        <div class="service-price">RM 8,000 &ndash; 25,000</div>
-        <div class="service-price-note">Build fee + RM 300&ndash;500/month maintenance</div>
-        <ul class="service-features">
-          <li class="service-feature"><span class="service-check" style="background:#2a2a3e;color:#6E6E73">&#x2713;</span>HitPay gateway (FPX, TnG, GrabPay, cards)</li>
-          <li class="service-feature"><span class="service-check" style="background:#2a2a3e;color:#6E6E73">&#x2713;</span>Admin dashboard &amp; order management</li>
-          <li class="service-feature"><span class="service-check" style="background:#2a2a3e;color:#6E6E73">&#x2713;</span>Email notifications (automatic)</li>
-          <li class="service-feature"><span class="service-check" style="background:#2a2a3e;color:#6E6E73">&#x2713;</span>Supabase database + full security hardening</li>
-          <li class="service-feature"><span class="service-check" style="background:#2a2a3e;color:#6E6E73">&#x2713;</span>PDPA compliant data handling</li>
-        </ul>
-      </div>
+<!-- ============ ABOUT ============ -->
+<section class="sec" id="about">
+  <div class="wrap about">
+    <div>
+      <p class="mono rv" style="margin-bottom:14px">About</p>
+      <h2 class="h2 rv dl1">A studio that builds like a proper company should.</h2>
     </div>
+    <div class="about-txt">
+      <p class="lead rv dl1">NoirTech is a web development studio in Petaling Jaya working with Malaysian small and mid-sized businesses. We do three things: <strong>company websites</strong>, <strong>online stores with real payment processing</strong>, and <strong>dashboards that turn scattered spreadsheets into decisions</strong>.</p>
+      <p class="lead rv dl2">Most businesses here face a choice between agency rates that don't fit the budget, or freelancers who disappear after handover. We sit in between &mdash; production-quality work, properly documented and secured, at pricing that makes sense for a business your size.</p>
+      <p class="lead rv dl3">You deal directly with the person building your project. No account managers, no work quietly passed to someone else.</p>
 
-    <p style="margin-top:20px;font-size:14px;color:var(--gray-4);text-align:center" class="reveal">
-      Not sure which fits your needs? <a href="#contact" style="color:var(--indigo);font-weight:500">Send me a message</a> &mdash; free consultation, no commitment.
-    </p>
-  </div>
-</section>
-
-<!-- PORTFOLIO -->
-<section id="portfolio">
-  <div class="section-inner">
-    <p class="sec-eyebrow reveal">Recent Work</p>
-    <h2 class="sec-h2 reveal reveal-delay-1">Projects I'm proud of.</h2>
-    <p class="sec-lead reveal reveal-delay-2">Two client projects completed, both delivered on time, both still running.</p>
-
-    <div class="portfolio-grid">
-
-      <div class="portfolio-card reveal">
-        <div class="portfolio-visual tgl">
-          <div class="portfolio-mock">
-            <div class="mock-browser">
-              <div class="mock-nav">
-                <div class="mock-nav-dot" style="width:30px"></div>
-                <div class="mock-nav-dot" style="width:20px"></div>
-                <div class="mock-nav-dot" style="width:24px"></div>
-                <div class="mock-nav-dot" style="width:16px;margin-left:auto"></div>
-              </div>
-              <div class="mock-hero-block">
-                <div>
-                  <div style="height:4px;background:rgba(255,255,255,0.4);width:140px;border-radius:2px;margin-bottom:6px"></div>
-                  <div style="height:3px;background:rgba(255,255,255,0.2);width:90px;border-radius:2px"></div>
-                </div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
-                <div style="height:28px;border-radius:3px;background:rgba(255,255,255,0.06)"></div>
-                <div style="height:28px;border-radius:3px;background:rgba(255,255,255,0.06)"></div>
-                <div style="height:28px;border-radius:3px;background:rgba(255,255,255,0.06)"></div>
-              </div>
-              <div class="mock-row wide"></div>
-              <div class="mock-row short"></div>
-            </div>
-            <div class="mock-badge" style="background:#059669">Live &nearr;</div>
-          </div>
-        </div>
-        <div class="portfolio-content">
-          <p class="portfolio-tag">Corporate Website &middot; 2024</p>
-          <h3 class="portfolio-title">Teo Guan Lee Corporation Berhad</h3>
-          <p class="portfolio-desc">Full corporate website for a Bursa Malaysia-listed company. Built to meet the credibility standards expected of a publicly listed entity &mdash; clean investor-facing pages, company profile, business divisions overview, and contact infrastructure.</p>
-          <div class="portfolio-tech">
-            <span class="tech-pill">HTML / CSS / JS</span>
-            <span class="tech-pill">Mobile Responsive</span>
-            <span class="tech-pill">Contact Form</span>
-            <span class="tech-pill">SEO Optimised</span>
-            <span class="tech-pill">GitHub Pages</span>
-          </div>
-          <div class="portfolio-stat-row">
-            <div class="portfolio-stat-item">
-              <span class="portfolio-stat-val">5</span>
-              <span class="portfolio-stat-key">Pages delivered</span>
-            </div>
-            <div class="portfolio-stat-item">
-              <span class="portfolio-stat-val">Bursa</span>
-              <span class="portfolio-stat-key">Listed client</span>
-            </div>
-            <div class="portfolio-stat-item">
-              <span class="portfolio-stat-val">Live</span>
-              <span class="portfolio-stat-key">Status</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="portfolio-card reverse reveal">
-        <div class="portfolio-visual solar">
-          <div class="portfolio-mock">
-            <div class="mock-browser">
-              <div class="mock-nav">
-                <div class="mock-nav-dot" style="width:30px"></div>
-                <div class="mock-nav-dot" style="width:50px;background:rgba(74,222,128,0.4)"></div>
-                <div style="margin-left:auto;height:4px;width:14px;border-radius:2px;background:rgba(74,222,128,0.5)"></div>
-              </div>
-              <div style="background:rgba(74,222,128,0.08);border-radius:4px;padding:8px;margin-bottom:6px">
-                <div style="height:4px;border-radius:2px;background:rgba(74,222,128,0.3);width:80%;margin-bottom:5px"></div>
-                <div style="height:3px;border-radius:2px;background:rgba(74,222,128,0.15);width:55%"></div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px">
-                <div style="height:36px;border-radius:3px;background:rgba(255,255,255,0.06);padding:4px 6px">
-                  <div style="height:3px;background:rgba(255,255,255,0.2);border-radius:2px;margin-bottom:4px;width:80%"></div>
-                  <div style="height:3px;background:rgba(74,222,128,0.3);border-radius:2px;width:50%"></div>
-                </div>
-                <div style="height:36px;border-radius:3px;background:rgba(255,255,255,0.06);padding:4px 6px">
-                  <div style="height:3px;background:rgba(255,255,255,0.2);border-radius:2px;margin-bottom:4px;width:70%"></div>
-                  <div style="height:3px;background:rgba(74,222,128,0.3);border-radius:2px;width:60%"></div>
-                </div>
-              </div>
-              <div style="background:rgba(74,222,128,0.6);border-radius:10px;height:18px;display:flex;align-items:center;justify-content:center">
-                <div style="height:3px;background:rgba(0,0,0,0.5);border-radius:2px;width:70px"></div>
-              </div>
-            </div>
-            <div class="mock-badge" style="background:#D97706">Pending Launch</div>
-          </div>
-        </div>
-        <div class="portfolio-content">
-          <p class="portfolio-tag">E-Commerce System &middot; 2024</p>
-          <h3 class="portfolio-title">Solar Products Online Store</h3>
-          <p class="portfolio-desc">Complete e-commerce system for a solar equipment retailer &mdash; product catalogue, cart, full checkout with Malaysian payment methods, and an admin dashboard to manage orders and inventory. Built with security hardening and PDPA compliance from the ground up.</p>
-          <div class="portfolio-tech">
-            <span class="tech-pill">HitPay (FPX &middot; TnG &middot; GrabPay)</span>
-            <span class="tech-pill">Supabase</span>
-            <span class="tech-pill">Admin Dashboard</span>
-            <span class="tech-pill">Email Notifications</span>
-            <span class="tech-pill">PDPA Compliant</span>
-          </div>
-          <div class="portfolio-stat-row">
-            <div class="portfolio-stat-item">
-              <span class="portfolio-stat-val">4</span>
-              <span class="portfolio-stat-key">Payment methods</span>
-            </div>
-            <div class="portfolio-stat-item">
-              <span class="portfolio-stat-val">Full</span>
-              <span class="portfolio-stat-key">Admin panel</span>
-            </div>
-            <div class="portfolio-stat-item">
-              <span class="portfolio-stat-val">PDPA</span>
-              <span class="portfolio-stat-key">Compliant</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- WHY ME -->
-<section id="why">
-  <div class="section-inner">
-    <p class="sec-eyebrow reveal">Why Work With Me</p>
-    <h2 class="sec-h2 reveal reveal-delay-1">What you get that agencies can't offer.</h2>
-    <p class="sec-lead reveal reveal-delay-2">You speak to the person building your product. Always.</p>
-
-    <div class="why-grid reveal">
-      <div class="why-card">
-        <div class="why-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gray-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <h4 class="why-title">I get Malaysian business</h4>
-        <p class="why-desc">FPX, TnG, SSM registration flow, PDPA, Bumiputera requirements &mdash; I understand the local context that agencies in Singapore or KL overlook.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gray-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <h4 class="why-title">Direct access, no middlemen</h4>
-        <p class="why-desc">You WhatsApp me. I respond. No account managers, no tickets, no handoffs. Your project is always my top priority.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gray-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-        <h4 class="why-title">Affordable without cutting corners</h4>
-        <p class="why-desc">Low overheads mean fair pricing &mdash; not cheap work. You get enterprise-grade security and clean code at SME-friendly rates.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gray-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-        <h4 class="why-title">Security &amp; compliance built in</h4>
-        <p class="why-desc">Every e-commerce build ships with full security hardening and PDPA-compliant data handling &mdash; not bolted on as an afterthought.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gray-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-        <h4 class="why-title">Mobile-first, always</h4>
-        <p class="why-desc">Over 70% of Malaysian web traffic is mobile. Every pixel I design is tested on phone first, desktop second.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gray-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <h4 class="why-title">Partnership, not transactions</h4>
-        <p class="why-desc">I want to be your long-term tech partner. Maintenance plans, future updates, and honest advice are part of the deal.</p>
+      <div class="rows rv dl3">
+        <div class="row"><span class="row-k">Track record</span><span class="row-v">Delivered a corporate site for a <b>Bursa Malaysia-listed group</b>, and a full e-commerce platform with live Malaysian payment processing.</span></div>
+        <div class="row"><span class="row-k">Pricing</span><span class="row-v">Fixed quotes agreed before work begins. <b>No hourly billing, no surprise invoices.</b> High-quality work at reasonable rates.</span></div>
+        <div class="row"><span class="row-k">Compliance</span><span class="row-v">PDPA-compliant data handling and security hardening included on every build &mdash; standard, not a paid extra.</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-inner">
-    <div class="about-left">
-      <p class="sec-eyebrow reveal">About</p>
-      <h2 class="sec-h2 reveal reveal-delay-1">A developer who understands your business goals.</h2>
-      <p class="about-body reveal reveal-delay-2">
-        I'm a freelance web developer based in <strong>Petaling Jaya, Selangor</strong>. I build digital systems that help Malaysian SMEs operate smarter &mdash; whether that's a corporate website to win trust, an e-commerce store to sell online, or a dashboard to make sense of your data.<br><br>
-        I started freelancing because I saw a gap: most developers speak tech, not business. I do both. Before writing a single line of code, I ask what your customers need, what your business goals are, and what success actually looks like for you.
-      </p>
-
-
-
-      <div class="tools-section reveal">
-        <div class="tools-label">Tools I use</div>
-        <div class="tools-wrap">
-          <span class="tool-pill">HTML / CSS / JS</span>
-          <span class="tool-pill">Power BI</span>
-          <span class="tool-pill">Power Query</span>
-          <span class="tool-pill">Excel</span>
-          <span class="tool-pill">Supabase</span>
-          <span class="tool-pill">HitPay</span>
-          <span class="tool-pill">Formspree</span>
-          <span class="tool-pill">GitHub Pages</span>
-          <span class="tool-pill">Figma</span>
-          <span class="tool-pill">VS Code</span>
-        </div>
-      </div>
+<!-- ============ SERVICES ============ -->
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="shead rv">
+      <p class="mono">Services</p>
+      <h2 class="h2">Three things we do well.</h2>
+      <p class="lead">Each service is kept deliberately focused. Select any service below to see the work we have delivered in that area.</p>
     </div>
 
-    <div class="about-card reveal reveal-delay-2">
-      <p class="about-card-label">What I deliver</p>
-      <div class="about-cap-grid">
-        <div class="about-cap">
-          <div class="about-cap-title">Corporate websites</div>
-          <div class="about-cap-desc">Clean, fast, mobile-first sites that represent your business professionally &mdash; built to the standard of a Bursa-listed company.</div>
-        </div>
-        <div class="about-cap">
-          <div class="about-cap-title">E-commerce systems</div>
-          <div class="about-cap-desc">Full online stores with Malaysian payment gateways, admin dashboards, and security hardening built in from day one.</div>
-        </div>
-        <div class="about-cap">
-          <div class="about-cap-title">Data dashboards</div>
-          <div class="about-cap-desc">Power BI dashboards and Excel automation that turn scattered data into reports your team can actually act on.</div>
-        </div>
-        <div class="about-cap">
-          <div class="about-cap-title">Ongoing support</div>
-          <div class="about-cap-desc">Maintenance plans, updates, and honest advice long after launch &mdash; I aim to be your tech partner, not just a one-off vendor.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="svcs">
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner">
-    <div class="contact-left">
-      <p class="sec-eyebrow reveal">Get In Touch</p>
-      <h2 class="sec-h2 reveal reveal-delay-1">Let's talk about your project.</h2>
-      <p class="sec-lead reveal reveal-delay-2">Tell me what you need and I'll come back with honest advice and a fair quote &mdash; usually within 24 hours.</p>
-
-      <a class="wa-big reveal" href="https://wa.me/60124063717?text=Hello%2C%20I%20came%20across%20your%20portfolio%20and%20I%27m%20interested%20in%20discussing%20a%20web%20development%20project%20for%20my%20business.%20Could%20we%20arrange%20a%20time%20to%20speak%3F" target="_blank" rel="noopener">
-        <span class="wa-big-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></span>
-        <div class="wa-big-text">
-          <div class="wa-big-title">WhatsApp Me Directly</div>
-          <div class="wa-big-sub">+6012-406 3717 &middot; Mon&ndash;Sat, 9am&ndash;9pm</div>
+      <a class="svc rv" href="projects.html#websites">
+        <div class="svc-n">01</div>
+        <div>
+          <h3 class="h3 svc-h">Company &amp; corporate websites</h3>
+          <p class="svc-p">A site that represents your business as well as it deserves. Fast, mobile-ready, and structured so a visitor understands what you do within the first scroll &mdash; built to the same standard we delivered for a publicly listed group.</p>
+          <span class="svc-go">View project
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
         </div>
-        <span class="wa-big-arr">&#x2192;</span>
+        <div class="svc-l">
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Multi-page structure: profile, services, credentials, contact</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Mobile-first &mdash; most visitors arrive on a phone</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Enquiry forms routed straight to your inbox</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Search-ready markup and hosting set up on handover</span></div>
+        </div>
       </a>
 
-      <div class="contact-detail reveal">
-        <div class="contact-item">
-          <div class="contact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gray-4)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          Petaling Jaya, Selangor, Malaysia
+      <a class="svc rv" href="projects.html#ecommerce">
+        <div class="svc-n">02</div>
+        <div>
+          <h3 class="h3 svc-h">Online stores with real payments</h3>
+          <p class="svc-p">A complete store, not a template with a payment button bolted on. Customers pay by FPX, Touch &lsquo;n Go, GrabPay or card. You get an admin panel for orders and stock. Both sides receive automatic confirmations.</p>
+          <span class="svc-go">View project
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
         </div>
-        <div class="contact-item">
-          <div class="contact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gray-4)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          Mon &ndash; Sat &middot; 9am &ndash; 9pm MYT
+        <div class="svc-l">
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Product catalogue, cart and full checkout flow</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>HitPay gateway &mdash; FPX, TnG, GrabPay, cards</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Admin dashboard for orders, stock and customers</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Security hardening and PDPA-compliant data handling</span></div>
         </div>
-        <div class="contact-item">
-          <div class="contact-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gray-4)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          Reply within 24 hours guaranteed
+      </a>
+
+      <a class="svc rv" href="projects.html#data">
+        <div class="svc-n">03</div>
+        <div>
+          <h3 class="h3 svc-h">Reporting dashboards &amp; automation</h3>
+          <p class="svc-p">If your monthly numbers live across a dozen spreadsheets and someone spends days stitching them together, that work can be automated. We consolidate the sources, build the dashboard, and hand you something that refreshes itself.</p>
+          <span class="svc-go">See what we deliver
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
         </div>
+        <div class="svc-l">
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Power Query consolidation across files and systems</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Power BI dashboards built around real decisions</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Excel automation to remove repeated manual work</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>One-refresh reporting, plus a walkthrough for your team</span></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="sec" id="process">
+  <div class="wrap">
+    <div class="shead rv">
+      <p class="mono">Process</p>
+      <h2 class="h2">Four steps, and a fixed price before any work begins.</h2>
+      <p class="lead">No stage where you are left guessing about cost, timeline, or what happens next.</p>
+    </div>
+    <div class="steps rv">
+      <div class="step"><div class="step-n">Step 01</div><h4>Understand</h4><p>A short conversation about your business and what the project needs to achieve. No charge, no obligation.</p></div>
+      <div class="step"><div class="step-n">Step 02</div><h4>Quote &amp; scope</h4><p>A written scope and a fixed price. You approve before work starts, and the number does not change.</p></div>
+      <div class="step"><div class="step-n">Step 03</div><h4>Build</h4><p>Development with a preview link you can check any time. Feedback rounds are included, not an extra.</p></div>
+      <div class="step"><div class="step-n">Step 04</div><h4>Launch &amp; support</h4><p>Deployment, handover and a walkthrough. Monthly maintenance available if you would rather not manage it.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="sec" id="contact">
+  <div class="wrap ctc">
+    <div class="ctc-l">
+      <p class="mono rv" style="margin-bottom:14px">Contact</p>
+      <h2 class="h2 rv dl1" style="margin-bottom:14px">Tell us what you need.</h2>
+      <p class="lead rv dl2">Two lines about your business is enough to start. We will come back with honest advice and a fixed quote, usually within 24 hours.</p>
+
+      <div class="dbtns rv dl2">
+        <a class="dbtn" id="waMain" href="#" target="_blank" rel="noopener">
+          <span class="dbtn-i" style="color:var(--green);border-color:var(--green-line);background:var(--green-bg)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.42Z"/></svg>
+          </span>
+          <span class="dbtn-t"><b>WhatsApp</b><span>+60 12-406 3717</span></span>
+          <span class="dbtn-a"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </a>
       </div>
     </div>
 
-    <div class="reveal reveal-delay-1">
-      <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="name">Your name</label>
-            <input class="form-input" type="text" id="name" name="name" placeholder="Tan Wei Ming" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="company">Company name</label>
-            <input class="form-input" type="text" id="company" name="company" placeholder="ABC Sdn Bhd"/>
-          </div>
+    <div class="card rv dl2">
+      <p class="card-h">Send a message</p>
+      <p class="card-s">Three fields. That is enough to get started.</p>
+      <form class="f" id="form" novalidate>
+        <div class="fl">
+          <label for="nm">Name</label>
+          <input type="text" id="nm" name="name" placeholder="Your name" autocomplete="name" required>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="email">Email address</label>
-          <input class="form-input" type="email" id="email" name="email" placeholder="you@company.com.my" required/>
+        <div class="fl">
+          <label for="ct">Email or phone</label>
+          <input type="text" id="ct" name="contact" placeholder="How we should reach you" required>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="service">Which service interests you?</label>
-          <select class="form-select" id="service" name="service">
-            <option value="">Select a service...</option>
-            <option value="data">Data &amp; Dashboard (RM 500-2,000)</option>
-            <option value="corporate">Corporate Website (RM 1,500-2,500)</option>
-            <option value="ecommerce">E-Commerce System (RM 8,000-25,000)</option>
-            <option value="unsure">Not sure - need advice</option>
-          </select>
+        <div class="fl">
+          <label for="ms">What do you need?</label>
+          <textarea id="ms" name="message" rows="4" placeholder="A sentence or two about your business and what you are looking for." required></textarea>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="message">Tell me about your project</label>
-          <textarea class="form-textarea" id="message" name="message" rows="4" placeholder="What does your business do? What problem are you trying to solve? Any deadlines?"></textarea>
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <div class="cons">
+          <input type="checkbox" id="ok" name="consent" required>
+          <label for="ok">I consent to NoirTech collecting and using these details solely to respond to this enquiry, in accordance with the Personal Data Protection Act 2010. Details are never shared or sold, and you may request deletion at any time.</label>
         </div>
-        <button type="submit" class="form-submit">Send Enquiry &rarr;</button>
-        <p class="form-note">Your information is kept private and never shared. PDPA compliant.</p>
+        <button type="submit" class="send" id="sendBtn">
+          Send message
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
       </form>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+</main>
+
 <footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <strong>Freelance Web Developer</strong> &middot; Petaling Jaya, Selangor<br>
-      <span style="font-size:12px">&#169; 2024 &middot; Built with care for Malaysian SMEs</span>
+  <div class="wrap foot">
+    <div>
+      <div class="foot-b">
+        <svg style="width:17px;height:17px;border-radius:4px" viewBox="0 0 100 100" aria-hidden="true">
+          <rect width="100" height="100" rx="22" fill="var(--fg)"/>
+          <path d="M30 28h11v44H30zM59 28h11v44H59zM30 28h11l29 44H59z" fill="var(--bg)"/>
+        </svg>
+        NoirTech
+      </div>
+      <p>Web development for Malaysian business.<br>Petaling Jaya, Selangor &middot; A Noir Group company.</p>
     </div>
-    <nav class="footer-links" aria-label="Footer navigation">
-      <a href="#services">Services</a>
-      <a href="#portfolio">Portfolio</a>
+    <nav aria-label="Footer">
       <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="projects.html">Work</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
 </footer>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-// Mobile menu
-var burger = document.getElementById('burger');
-var mobileMenu = document.getElementById('mobile-menu');
-var menuOpen = false;
+(function(){
+  "use strict";
 
-function toggleMenu(open) {
-  menuOpen = open;
-  if (open) {
-    mobileMenu.classList.add('open');
-  } else {
-    mobileMenu.classList.remove('open');
+  var EMAIL = "tohthienyew02@gmail.com";
+  var PHONE = "60124063717";
+  /* ------------------------------------------------------------------
+     STEP 1: Go to https://web3forms.com
+     STEP 2: Enter tohthienyew02@gmail.com and press "Create Access Key"
+     STEP 3: Check your inbox, copy the key, paste it below.
+     That is the entire setup. Submissions arrive in your Gmail.
+     ------------------------------------------------------------------ */
+  var ACCESS_KEY = "PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE";
+
+  var doc = document.documentElement;
+
+  /* ---------- toast ---------- */
+  var toastEl = document.getElementById("toast"), toastTimer;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove("on"); }, 4200);
   }
-  burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-  var spans = burger.querySelectorAll('span');
-  if (open) {
-    spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
-    spans[1].style.opacity = '0';
-    spans[2].style.transform = 'rotate(-45deg) translate(4px, -4px)';
-  } else {
-    spans[0].style.transform = '';
-    spans[1].style.opacity = '';
-    spans[2].style.transform = '';
+
+  /* ---------- theme ---------- */
+  try{
+    var stored = localStorage.getItem("nt-theme");
+    if(stored === "light" || stored === "dark") doc.setAttribute("data-theme", stored);
+  }catch(e){}
+
+  var themeBtn = document.getElementById("themeBtn");
+  themeBtn.addEventListener("click", function(){
+    var now  = doc.getAttribute("data-theme") === "light" ? "light" : "dark";
+    var next = now === "dark" ? "light" : "dark";
+    doc.setAttribute("data-theme", next);
+    try{ localStorage.setItem("nt-theme", next); }catch(e){}
+  });
+
+  /* ---------- whatsapp links ---------- */
+  var WA_TEXT = "Hello NoirTech, I came across your website and would like to discuss a project for my business. Could we arrange a time to speak?";
+  var waURL = "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(WA_TEXT);
+  ["waHero","waMain"].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.setAttribute("href", waURL);
+  });
+
+  /* ---------- sticky nav border ---------- */
+  var navEl = document.getElementById("nav");
+  function onScroll(){ navEl.classList.toggle("stuck", window.scrollY > 10); }
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive:true });
+
+  /* ---------- mobile menu ---------- */
+  var burger = document.getElementById("burger");
+  var menu   = document.getElementById("menu");
+  var isOpen = false;
+  function setMenu(v){
+    isOpen = v;
+    menu.classList.toggle("on", v);
+    burger.classList.toggle("on", v);
+    burger.setAttribute("aria-expanded", v ? "true" : "false");
+    burger.setAttribute("aria-label", v ? "Close menu" : "Open menu");
   }
-}
-
-burger.addEventListener('click', function() {
-  toggleMenu(!menuOpen);
-});
-
-var mobileLinks = document.querySelectorAll('.mobile-link');
-for (var i = 0; i < mobileLinks.length; i++) {
-  mobileLinks[i].addEventListener('click', function() {
-    toggleMenu(false);
+  burger.addEventListener("click", function(){ setMenu(!isOpen); });
+  Array.prototype.forEach.call(menu.querySelectorAll("a"), function(a){
+    a.addEventListener("click", function(){ setMenu(false); });
   });
-}
-
-// Scroll reveal
-var reveals = document.querySelectorAll('.reveal');
-var revealObs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-    }
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && isOpen) setMenu(false);
   });
-}, { threshold: 0.12 });
-reveals.forEach(function(el) {
-  revealObs.observe(el);
-});
+  window.addEventListener("resize", function(){
+    if(window.innerWidth > 920 && isOpen) setMenu(false);
+  });
 
+  /* ---------- reveal on scroll ---------- */
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var items  = document.querySelectorAll(".rv");
+  if(!reduce && "IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add("in");
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold:0.08, rootMargin:"0px 0px -5% 0px" });
+    Array.prototype.forEach.call(items, function(el){ io.observe(el); });
+  }else{
+    Array.prototype.forEach.call(items, function(el){ el.classList.add("in"); });
+  }
 
+  /* ---------- active nav link ---------- */
+  var navLinks = document.querySelectorAll('.links a[href^="#"]');
+  var targets  = [];
+  Array.prototype.forEach.call(navLinks, function(a){
+    var t = document.querySelector(a.getAttribute("href"));
+    if(t) targets.push({ a:a, t:t });
+  });
+  if("IntersectionObserver" in window && targets.length){
+    var nio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        targets.forEach(function(p){ p.a.classList.toggle("act", p.t === en.target); });
+      });
+    }, { rootMargin:"-45% 0px -50% 0px" });
+    targets.forEach(function(p){ nio.observe(p.t); });
+  }
 
-// Toast
-function showToast(msg, duration) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function() {
-    t.classList.remove('show');
-  }, duration || 3500);
-}
+  /* ---------- form: Web3Forms backend ---------- */
+  var form = document.getElementById("form");
+  var sendBtn = document.getElementById("sendBtn");
+  var BTN_LABEL = sendBtn.innerHTML;
 
-// Contact form
-var form = document.getElementById('contact-form');
-form.addEventListener('submit', function(e) {
-  var action = form.getAttribute('action');
-  if (action.indexOf('YOUR_FORM_ID') !== -1) {
+  function busy(on, label){
+    sendBtn.disabled = on;
+    sendBtn.innerHTML = on ? (label || "Sending...") : BTN_LABEL;
+  }
+
+  form.addEventListener("submit", function(e){
     e.preventDefault();
-    showToast('Replace the Formspree ID to enable form submission.');
-    return;
-  }
-  e.preventDefault();
-  var btn = form.querySelector('.form-submit');
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  var data = new FormData(form);
-  fetch(form.action, {
-    method: 'POST',
-    body: data,
-    headers: { 'Accept': 'application/json' }
-  }).then(function(res) {
-    if (res.ok) {
-      showToast('Sent! I will reply within 24 hours.');
-      form.reset();
-    } else {
-      showToast('Something went wrong - WhatsApp me instead.');
+
+    var name = form.name.value.trim();
+    var ctc  = form.contact.value.trim();
+    var msg  = form.message.value.trim();
+
+    if(!name){ toast("Please add your name."); form.name.focus(); return; }
+    if(!ctc){ toast("Please add an email or phone number."); form.contact.focus(); return; }
+    if(!msg){ toast("Please tell us what you need."); form.message.focus(); return; }
+    if(!form.consent.checked){ toast("Please tick the consent box so we can reply."); form.consent.focus(); return; }
+
+    if(!ACCESS_KEY || ACCESS_KEY === "PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE"){
+      toast("Form not connected yet. Add your Web3Forms access key.");
+      return;
     }
-    btn.textContent = 'Send Enquiry';
-    btn.disabled = false;
-  }).catch(function() {
-    showToast('Something went wrong - WhatsApp me instead.');
-    btn.textContent = 'Send Enquiry';
-    btn.disabled = false;
+
+    /* honeypot: real users never fill this */
+    if(form.botcheck && form.botcheck.value){ return; }
+
+    busy(true);
+
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        access_key : ACCESS_KEY,
+        subject    : "New enquiry from " + name + " - NoirTech",
+        from_name  : "NoirTech Website",
+        name       : name,
+        contact    : ctc,
+        message    : msg,
+        consent    : "Yes - PDPA 2010 consent given",
+        page       : window.location.href
+      })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(data && data.success){
+        form.reset();
+        toast("Message sent. We will reply within 24 hours.");
+      }else{
+        toast("That did not send. Please WhatsApp us instead.");
+      }
+    })
+    .catch(function(){
+      toast("Network problem. Please WhatsApp us instead.");
+    })
+    .then(function(){ busy(false); });
   });
-});
+
+})();
 </script>
 </body>
 </html>
