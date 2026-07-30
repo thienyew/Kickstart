@@ -477,7 +477,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
   <div class="wrap">
     <div class="shead rv">
       <p class="mono">Services</p>
-      <h2 class="h2">Three things we do well.</h2>
+      <h2 class="h2">What we build, and how we can help.</h2>
       <p class="lead">Each service is kept deliberately focused. Select any service below to see the work we have delivered in that area.</p>
     </div>
 
@@ -636,13 +636,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
 
   var EMAIL = "tohthienyew02@gmail.com";
   var PHONE = "60124063717";
-  /* ------------------------------------------------------------------
-     STEP 1: Go to https://web3forms.com
-     STEP 2: Enter tohthienyew02@gmail.com and press "Create Access Key"
-     STEP 3: Check your inbox, copy the key, paste it below.
-     That is the entire setup. Submissions arrive in your Gmail.
-     ------------------------------------------------------------------ */
-  var ACCESS_KEY = "PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE";
+  var ACCESS_KEY = "4c802316-cb09-4e87-b702-cc056124ab3f";
 
   var doc = document.documentElement;
 
@@ -760,11 +754,6 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     if(!ctc){ toast("Please add an email or phone number."); form.contact.focus(); return; }
     if(!msg){ toast("Please tell us what you need."); form.message.focus(); return; }
     if(!form.consent.checked){ toast("Please tick the consent box so we can reply."); form.consent.focus(); return; }
-
-    if(!ACCESS_KEY || ACCESS_KEY === "4c802316-cb09-4e87-b702-cc056124ab3f"){
-      toast("Form not connected yet. Add your Web3Forms access key.");
-      return;
-    }
 
     /* honeypot: real users never fill this */
     if(form.botcheck && form.botcheck.value){ return; }
