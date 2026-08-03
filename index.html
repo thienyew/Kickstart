@@ -77,7 +77,7 @@ img,svg{display:block;max-width:100%}
 
 /* ============ LAYOUT ============ */
 .wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-.sec{padding:clamp(64px,9vw,120px) 0;border-top:1px solid var(--line)}
+.sec{padding:clamp(52px,8vw,112px) 0;border-top:1px solid var(--line)}
 
 /* ============ TYPE ============ */
 .mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3)}
@@ -257,8 +257,8 @@ html[data-theme="light"] #moon{display:none}
   font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--fg3);transition:color .22s,transform .28s var(--ease);
 }
-.svc-l{display:flex;flex-direction:column;gap:10px;padding-top:4px}
-.svc-li{display:grid;grid-template-columns:15px 1fr;gap:10px;align-items:start;font-size:14px;line-height:1.58}
+.svc-l{display:flex;flex-direction:column;gap:12px;padding-top:4px}
+.svc-li{display:grid;grid-template-columns:15px 1fr;gap:11px;align-items:start;font-size:13.5px;line-height:1.68}
 .svc-li svg{margin-top:4px;color:var(--fg3);flex-shrink:0}
 
 /* ============ PROCESS ============ */
@@ -377,6 +377,28 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
   .live i{animation:none}
   *{transition-duration:.01ms !important}
 }
+
+/* ---- hero proof ---- */
+.hero-proof{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.proof-line{font-size:13px;color:var(--fg3);padding-left:14px;border-left:1px solid var(--line2)}
+/* ---- booking ---- */
+.book-wrap{border:1px solid var(--line);border-radius:14px;background:var(--bg2);overflow:hidden;min-height:180px}
+#calEmbed{width:100%}
+#calEmbed:not(:empty)+.book-fallback{display:none}
+.book-fallback{padding:clamp(30px,5vw,52px) clamp(20px,4vw,40px);text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.book-fb-icon{width:44px;height:44px;border-radius:11px;border:1px solid var(--line2);background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--fg3);margin-bottom:4px}
+.book-fb-title{font-size:16px;font-weight:600;color:var(--fg);letter-spacing:-.02em}
+.book-fb-sub{font-size:13.5px;color:var(--fg3);max-width:44ch;line-height:1.6}
+.book-fb-sub code{font-family:var(--mono);font-size:12px;background:var(--bg3);padding:1px 6px;border-radius:4px;border:1px solid var(--line)}
+.book-fb-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.b-primary{background:var(--fg);color:var(--bg);border:1px solid var(--fg)}
+.b-primary:hover{background:var(--hover);border-color:var(--hover)}
+@media(max-width:600px){
+  .hero-proof{flex-direction:column;align-items:flex-start;gap:8px}
+  .proof-line{padding-left:0;border-left:0}
+  .book-fb-btns .btn{flex:1 1 100%}
+}
+
 </style>
 </head>
 <body>
@@ -395,6 +417,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
       <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="projects.html">Work</a>
+      <a href="#book">Book</a>
       <a href="#contact">Contact</a>
     </nav>
 
@@ -415,6 +438,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
   <a href="#services">Services</a>
   <a href="#process">Process</a>
   <a href="projects.html">Work</a>
+  <a href="#book">Book</a>
   <a href="#contact">Contact</a>
 </div>
 
@@ -444,7 +468,10 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
       <a class="btn b-line" href="#services">View services</a>
     </div>
 
-    <p class="live rv dl3"><i aria-hidden="true"></i>Available for new projects</p>
+    <div class="hero-proof rv dl3">
+        <p class="live"><i aria-hidden="true"></i>Available for new projects</p>
+        <p class="proof-line">Trusted by a Bursa Malaysia-listed group</p>
+      </div>
 
     <div class="facts rv dl3">
       <div class="fact"><div class="fact-k">Based in</div><div class="fact-v">Selangor, Malaysia</div></div>
@@ -471,14 +498,13 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
       <h2 class="h2 rv dl1">A studio that builds like a proper company should.</h2>
     </div>
     <div class="about-txt">
-      <p class="lead rv dl1">NoirTech is a web development studio in Petaling Jaya working with Malaysian small and mid-sized businesses. We do three things: <strong>company websites</strong>, <strong>online stores with real payment processing</strong>, and <strong>dashboards that turn scattered spreadsheets into decisions</strong>.</p>
-      <p class="lead rv dl2">Most businesses here face a choice between agency rates that don't fit the budget, or freelancers who disappear after handover. We sit in between &mdash; production-quality work, properly documented and secured, at pricing that makes sense for a business your size.</p>
-      <p class="lead rv dl3">You deal directly with the person building your project. No account managers, no work quietly passed to someone else.</p>
+      <p class="lead rv dl1">A web development studio in Petaling Jaya, building for Malaysian SMEs: <strong>websites</strong>, <strong>online stores that take real payments</strong>, and <strong>dashboards that replace manual reporting</strong>.</p>
+      <p class="lead rv dl2">Agency rates rarely fit an SME budget. Freelancers vanish after handover. We sit in between &mdash; and you deal directly with the person building your project.</p>
 
       <div class="rows rv dl3">
-        <div class="row"><span class="row-k">Track record</span><span class="row-v">Delivered a corporate site for a <b>Bursa Malaysia-listed group</b>, and a full e-commerce platform with live Malaysian payment processing.</span></div>
-        <div class="row"><span class="row-k">Pricing</span><span class="row-v">Fixed quotes agreed before work begins. <b>No hourly billing, no surprise invoices.</b> High-quality work at reasonable rates.</span></div>
-        <div class="row"><span class="row-k">Compliance</span><span class="row-v">PDPA-compliant data handling and security hardening included on every build &mdash; standard, not a paid extra.</span></div>
+        <div class="row"><span class="row-k">Track record</span><span class="row-v">Corporate site for a <b>Bursa Malaysia-listed group</b>. Full e-commerce platform with live payment processing.</span></div>
+        <div class="row"><span class="row-k">Pricing</span><span class="row-v"><b>Fixed quotes agreed before work begins.</b> No hourly billing, no surprise invoices.</span></div>
+        <div class="row"><span class="row-k">Compliance</span><span class="row-v">PDPA-compliant handling and security hardening on every build. Standard, not an extra.</span></div>
       </div>
     </div>
   </div>
@@ -494,58 +520,66 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     </div>
 
     <div class="svcs">
-
       <a class="svc rv" href="projects.html#websites">
         <div class="svc-n">01</div>
         <div>
           <h3 class="h3 svc-h">Company &amp; corporate websites</h3>
-          <p class="svc-p">A site that represents your business as well as it deserves. Fast, mobile-ready, and structured so a visitor understands what you do within the first scroll &mdash; built to the same standard we delivered for a publicly listed group.</p>
+          <p class="svc-p">A site that makes your business look as credible as it is. Fast on mobile, clear in one scroll.</p>
           <span class="svc-go">View project
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </div>
         <div class="svc-l">
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Multi-page structure: profile, services, credentials, contact</span></div>
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Mobile-first &mdash; most visitors arrive on a phone</span></div>
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Enquiry forms routed straight to your inbox</span></div>
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Search-ready markup and hosting set up on handover</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Multi-page: profile, services, credentials, contact</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Mobile-first &mdash; where most visitors arrive</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Enquiries routed straight to your inbox</span></div>
         </div>
       </a>
-
       <a class="svc rv" href="projects.html#ecommerce">
         <div class="svc-n">02</div>
         <div>
           <h3 class="h3 svc-h">Online stores with real payments</h3>
-          <p class="svc-p">A complete store, not a template with a payment button bolted on. Customers pay by FPX, Touch &lsquo;n Go, GrabPay or card. You get an admin panel for orders and stock. Both sides receive automatic confirmations.</p>
+          <p class="svc-p">A complete store, not a template with a payment button. FPX, Touch &lsquo;n Go, GrabPay and cards.</p>
           <span class="svc-go">View project
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </div>
         <div class="svc-l">
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Product catalogue, cart and full checkout flow</span></div>
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>HitPay gateway &mdash; FPX, TnG, GrabPay, cards</span></div>
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Admin dashboard for orders, stock and customers</span></div>
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Security hardening and PDPA-compliant data handling</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Full catalogue, cart and checkout</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Admin panel for orders and stock</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Security hardened, PDPA compliant</span></div>
         </div>
       </a>
-
       <a class="svc rv" href="projects.html#data">
         <div class="svc-n">03</div>
         <div>
-          <h3 class="h3 svc-h">Reporting dashboards &amp; automation</h3>
-          <p class="svc-p">If your monthly numbers live across a dozen spreadsheets and someone spends days stitching them together, that work can be automated. We consolidate the sources, build the dashboard, and hand you something that refreshes itself.</p>
+          <h3 class="h3 svc-h">Reporting dashboards</h3>
+          <p class="svc-p">If a monthly report eats days of manual work, it can be automated.</p>
           <span class="svc-go">See what we deliver
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </span>
         </div>
         <div class="svc-l">
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Power Query consolidation across files and systems</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Power Query consolidation across systems</span></div>
           <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Power BI dashboards built around real decisions</span></div>
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Excel automation to remove repeated manual work</span></div>
-          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>One-refresh reporting, plus a walkthrough for your team</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>One-click refresh &mdash; no monthly rebuild</span></div>
         </div>
       </a>
-
+      <a class="svc rv" href="projects.html#booking">
+        <div class="svc-n">04</div>
+        <div>
+          <h3 class="h3 svc-h">Booking &amp; appointment systems</h3>
+          <p class="svc-p">Let clients book you directly. Availability synced to your calendar, reminders sent automatically.</p>
+          <span class="svc-go">See what we deliver
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </div>
+        <div class="svc-l">
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Live availability, no double-booking</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Automatic confirmation and reminder emails</span></div>
+          <div class="svc-li"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><span>Works on your own domain and branding</span></div>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -556,13 +590,40 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     <div class="shead rv">
       <p class="mono">Process</p>
       <h2 class="h2">Four steps, and a fixed price before any work begins.</h2>
-      <p class="lead">No stage where you are left guessing about cost, timeline, or what happens next.</p>
+      <p class="lead">No stage where you are guessing about cost or timeline.</p>
     </div>
     <div class="steps rv">
-      <div class="step"><div class="step-n">Step 01</div><h4>Understand</h4><p>A short conversation about your business and what the project needs to achieve. No charge, no obligation.</p></div>
-      <div class="step"><div class="step-n">Step 02</div><h4>Quote &amp; scope</h4><p>A written scope and a fixed price. You approve before work starts, and the number does not change.</p></div>
-      <div class="step"><div class="step-n">Step 03</div><h4>Build</h4><p>Development with a preview link you can check any time. Feedback rounds are included, not an extra.</p></div>
-      <div class="step"><div class="step-n">Step 04</div><h4>Launch &amp; support</h4><p>Deployment, handover and a walkthrough. Monthly maintenance available if you would rather not manage it.</p></div>
+      <div class="step"><div class="step-n">Step 01</div><h4>Understand</h4><p>A short conversation about what the project needs to achieve. No charge, no obligation.</p></div>
+      <div class="step"><div class="step-n">Step 02</div><h4>Quote &amp; scope</h4><p>A written scope and a fixed price. You approve before work starts. The number does not change.</p></div>
+      <div class="step"><div class="step-n">Step 03</div><h4>Build</h4><p>A preview link you can check any time. Feedback rounds included, not an extra.</p></div>
+      <div class="step"><div class="step-n">Step 04</div><h4>Launch &amp; support</h4><p>Deployment, handover and a walkthrough. Monthly maintenance if you want it.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ BOOK ============ -->
+<section class="sec" id="book">
+  <div class="wrap">
+    <div class="shead rv">
+      <p class="mono">Book a call</p>
+      <h2 class="h2">Fifteen minutes, no obligation.</h2>
+      <p class="lead">Pick a time that suits you. We will talk through what you need.</p>
+    </div>
+
+    <div class="book-wrap rv dl1">
+      <div id="calEmbed"></div>
+      <div class="book-fallback" id="bookFallback">
+        <div class="book-fb-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <p class="book-fb-title">Scheduling not connected yet</p>
+        <p class="book-fb-sub">Add your Cal.com username to <code>config.js</code> to show a live calendar here. In the meantime, reach us directly.</p>
+        <div class="book-fb-btns">
+          <a class="btn b-primary" href="#contact">Send a message</a>
+          <a class="btn b-wa" id="waBook" href="#" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -573,7 +634,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     <div class="ctc-l">
       <p class="mono rv" style="margin-bottom:14px">Contact</p>
       <h2 class="h2 rv dl1" style="margin-bottom:14px">Tell us what you need.</h2>
-      <p class="lead rv dl2">Two lines about your business is enough to start. We will come back with honest advice and a fixed quote, usually within 24 hours.</p>
+      <p class="lead rv dl2">Two lines about your business is enough. We reply with honest advice and a fixed quote.</p>
 
       <div class="dbtns rv dl2">
         <a class="dbtn" id="waMain" href="#" target="_blank" rel="noopener">
@@ -588,7 +649,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
 
     <div class="card rv dl2">
       <p class="card-h">Send a message</p>
-      <p class="card-s">Three fields. That is enough to get started.</p>
+      <p class="card-s">Three fields. That is all we need.</p>
       <form class="f" id="form" action="https://api.web3forms.com/submit" method="POST" novalidate>
         <input type="hidden" name="access_key" id="ak" value="">
         <input type="hidden" name="from_name" value="NoirTech Website">
@@ -635,6 +696,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
       <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="projects.html">Work</a>
+      <a href="#book">Book</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -680,10 +742,11 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
   /* ---------- whatsapp links ---------- */
   var WA_TEXT = "Hello NoirTech, I came across your website and would like to discuss a project for my business. Could we arrange a time to speak?";
   var waURL = "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(WA_TEXT);
-  ["waHero","waMain"].forEach(function(id){
+  ["waHero","waMain","waBook"].forEach(function(id){
     var el = document.getElementById(id);
     if(el) el.setAttribute("href", waURL);
   });
+
 
   /* ---------- sticky nav border ---------- */
   var navEl = document.getElementById("nav");
@@ -747,6 +810,39 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     targets.forEach(function(p){ nio.observe(p.t); });
   }
 
+  /* ---------- Cal.com booking embed ---------- */
+  var CAL_USER = CFG.CAL_USERNAME || "";
+  if (CAL_USER && CAL_USER.indexOf("PASTE_") !== 0) {
+    (function (C, A, L) {
+      var p = function (a, ar) { a.q.push(ar); };
+      var d = C.document;
+      C.Cal = C.Cal || function () {
+        var cal = C.Cal, ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {}; cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          var api = function () { p(api, arguments); };
+          var ns = ar[1]; api.q = api.q || [];
+          if (typeof ns === "string") { cal.ns[ns] = cal.ns[ns] || api; p(cal.ns[ns], ar); p(cal, ["initNamespace", ns]); }
+          else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    Cal("init", "nt", { origin: "https://app.cal.com" });
+    Cal.ns.nt("inline", {
+      elementOrSelector: "#calEmbed",
+      config: { layout: "month_view", theme: doc.getAttribute("data-theme") === "light" ? "light" : "dark" },
+      calLink: CAL_USER
+    });
+    Cal.ns.nt("ui", { hideEventTypeDetails: false, layout: "month_view" });
+  }
+
   /* ---------- form: Web3Forms backend ---------- */
   var akField = document.getElementById("ak");
   if (akField) akField.value = ACCESS_KEY;
@@ -801,7 +897,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     .then(function(data){
       if(data && data.success){
         form.reset();
-        toast("Message sent. We will reply within 24 hours.");
+        toast("Message sent. We will get back to you asap.");
       }else{
         console.error("Web3Forms rejected:", data);
         toast((data && data.message) ? data.message : "That did not send. Please WhatsApp us instead.");
